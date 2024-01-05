@@ -2,11 +2,14 @@
 <html lang="en">
 
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accessories - Sunlit Life</title>
-  <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
-  <!-- other head elements -->
+  <title>Sunlit Life - Keychains</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -27,15 +30,15 @@
     </div>
     <nav class="category-nav">
       <ul class="category-links">
-        <li><a href="accessories.html">Accessories</a></li>
-        <li><a href="#">Keychains</a></li>
+        <li><a href="#">Accessories</a></li>
+        <li><a href="keychains.html">Keychains</a></li>
         <li><a href="#">Stickers</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <h1>Accessories</h1>
+    <h1>Keychains</h1>
     <div class="product-grid">
       <a href="sunnysmiles.html" class="product-link">
         <div class="product-item">
@@ -43,7 +46,7 @@
           <h3>Sunny Smiles Keychain</h3>
           <p>Bring a touch of sunshine to your keys with this bright and cheerful keychain.</p>
           <p class="product-price">$10.99</p>
-          <button class="accessories-btn">Add to Cart</button>
+          <button class="add-to-cart-btn" data-product-id="1" data-product-name="Sunny Smiles Keychain" data-product-price="10.99">Add to Cart</button>
         </div>
       </a>
       <a href="starrynight.html" class="product-link">
@@ -53,7 +56,7 @@
           <p>Carry the magic of the night sky with you wherever you go with our Starry Night Keychain, adorned with a
             sparkling moon and stars.</p>
           <p class="product-price">$10.99</p>
-          <button class="accessories-btn">Add to Cart</button>
+          <button class="add-to-cart-btn" data-product-id="2" data-product-name="Starry Night Keychain" data-product-price="10.99">Add to Cart</button>
         </div>
       </a>
       <!-- Repeat for other products -->
@@ -63,6 +66,9 @@
   <footer>
     <!-- Your site's footer -->
   </footer>
+
+  <script src="script.js"></script>
+
 </body>
 
 </html>
