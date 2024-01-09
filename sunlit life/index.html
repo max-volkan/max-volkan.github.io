@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunlit Life</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <div class="top-bar">
+      <div class="search-container">
+        <input type="text" placeholder="Search..." id="search-bar">
+        <label for="search-bar"><i class="fa fa-search"></i></label>
+      </div>
+      <div class="logo-container">
+            <a href="index.html">
+                <img src="assets/logo.png" alt="Sunlit Life Logo" class="logo">
+            </a>
+        </div>
+      <div class="cart-icon">
+        <i class="fa fa-shopping-cart"></i>
+        <span class="cart-count">0</span> <!-- Cart count will be updated here -->
+        <div class="cart-dropdown">
+          <ul class="cart-items">
+            <!-- Cart items will be added here dynamically -->
+          </ul>
+          <a href="checkout.html" class="btn">Go to Checkout</a>
+        </div>
+      </div>
+    </div>
+    <nav class="category-nav">
+      <ul class="category-links">
+        <li><a href="#">Accessories</a></li>
+        <li><a href="keychains.html">Keychains</a></li>
+        <li><a href="#">Stickers</a></li>
+      </ul>
+    </nav>
+  </header> 
+  <main>
+    <!-- Main content goes here -->
+    <section class="featured-section image-left">
+      <div class="image-content" style="background-image: url('assets/product1sl.png');"></div>
+      <div class="text-content">
+        <h2>BRIGHTEN YOUR DAYS</h2>
+        <p>Elevate your everyday with the playful charm of Sunlit Life's poppy and delightful accessories, keychains,
+          and stickers that add a touch of whimsy to your life.</p>
+        <a href="#" class="btn">SHOP NOW</a>
+      </div>
+    </section>
+
+    <!-- Image on the right -->
+    <section class="featured-section image-right">
+      <div class="text-content">
+        <h2>SUNNY ACCENTS</h2>
+        <p>Life is made up of the small, joyful moments. Our collection of fun and vibrant accessories is designed to
+          bring a smile to your face every day. Whether it's a quirky keychain to brighten up your keys or a cheerful
+          sticker to adorn your belongings, Sunlit Life products are the perfect finishing touches to your style.</p>
+        <a href="#" class="btn">DISCOVER</a>
+      </div>
+      <div class="image-content" style="background-image: url('assets/product2sl.png');"></div>
+    </section>
+
+  </main>
+  <footer>
+    <!-- Footer content goes here -->
+  </footer>
+  <script src="script.js"></script>
+
+</body>
+
+</html>

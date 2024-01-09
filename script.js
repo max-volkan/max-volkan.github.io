@@ -16,11 +16,13 @@ document.querySelectorAll('.add-to-cart-btn').forEach(button => {
       id: button.getAttribute('data-product-id'),
       name: button.getAttribute('data-product-name'),
       price: button.getAttribute('data-product-price'),
+      image: button.getAttribute('data-product-image'), // Include image URL
       quantity: 1
     };
 
     addToCart(product);
     updateCartDropdown();
+    showCartNotification(product); // Call to show the notification
   });
 });
 
@@ -35,6 +37,23 @@ function addToCart(product) {
   updateCartCount();
 }
 
+function showCartNotification(product) {
+  const notification = document.createElement('div');
+  notification.className = 'cart-notification';
+  notification.innerHTML = `
+      <img src="${product.image}" alt="${product.name}" style="width: 50px; height: 50px;">
+      <p>${product.quantity} x ${product.name} added to cart</p>
+  `;
+  document.body.appendChild(notification);
+
+  // Animation to slide in and then remove the notification
+  setTimeout(() => notification.classList.add('slide-in'), 100);
+  setTimeout(() => {
+      notification.classList.remove('slide-in');
+      notification.remove();
+  }, 3000);
+}
+
 function updateCartCount() {
   const cartCount = cart.reduce((total, product) => total + product.quantity, 0);
   document.querySelector('.cart-count').textContent = cartCount;
@@ -45,14 +64,13 @@ function updateCartDropdown() {
   cartItemsContainer.innerHTML = ''; // Clear existing items
 
   if (cart.length === 0) {
-    // If cart is empty, display a placeholder message
     cartItemsContainer.innerHTML = '<li>Your cart is empty</li>';
   } else {
-    // Otherwise, add the cart items
     cart.forEach(item => {
       const li = document.createElement('li');
       li.classList.add('cart-item');
       li.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
         ${item.name} - $${item.price} x ${item.quantity}
         <button class="decrement-cart-item" data-product-id="${item.id}">-</button>
       `;
