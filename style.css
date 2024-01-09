@@ -26,7 +26,7 @@ body::before, body::after {
 
 body::before {
   background-image: url('./assets/space bg.gif');
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -84,7 +84,7 @@ header nav ul li a:hover {
 }
 
 .logo {
-  height: 100px; /* Adjust as needed */
+  height: 120px; /* Adjust as needed */
   margin-left: 20px;
   padding: 10px 20px;
 }
