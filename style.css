@@ -25,7 +25,7 @@ body::before, body::after {
 }
 
 body::before {
-  background-image: url('assets/space bg.gif');
+  background-image: url('./assets/space bg.gif');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
