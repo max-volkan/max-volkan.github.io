@@ -26,35 +26,52 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function loadSong(songIndex) {
         const songPath = songs[songIndex];
-        player.src = songPath;
-
-        jsmediatags.read(songPath, {
-            onSuccess: function(tag) {
-                const title = tag.tags.title || "Unknown Title";
-                const artist = tag.tags.artist || "Unknown Artist";
-                currentTrack.textContent = `${title} - ${artist}`;
-
-                if (tag.tags.picture) {
-                    let base64String = "";
-                    for (let i = 0; i < tag.tags.picture.data.length; i++) {
-                        base64String += String.fromCharCode(tag.tags.picture.data[i]);
+        
+        // Fetch the song as a Blob from the server
+        fetch(songPath)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            // Now we have the Blob, set it as the source for the audio player
+            player.src = URL.createObjectURL(blob);
+    
+            // Use jsmediatags to read the metadata from the Blob
+            jsmediatags.read(blob, {
+                onSuccess: function(tag) {
+                    const title = tag.tags.title || "Unknown Title";
+                    const artist = tag.tags.artist || "Unknown Artist";
+                    currentTrack.textContent = `${title} - ${artist}`;
+    
+                    if (tag.tags.picture) {
+                        let base64String = "";
+                        for (let i = 0; i < tag.tags.picture.data.length; i++) {
+                            base64String += String.fromCharCode(tag.tags.picture.data[i]);
+                        }
+                        const imageUrl = "data:" + tag.tags.picture.format + ";base64," + window.btoa(base64String);
+                        coverArt.src = imageUrl;
+                        coverArt.alt = `Cover Art for ${title}`;
+                    } else {
+                        coverArt.src = ''; // default image or leave blank
+                        coverArt.alt = 'No cover art available';
                     }
-                    const imageUrl = "data:" + tag.tags.picture.format + ";base64," + window.btoa(base64String);
-                    coverArt.src = imageUrl;
-                    coverArt.alt = `Cover Art for ${title}`;
-                } else {
+                },
+                onError: function(error) {
+                    console.error("Error reading metadata:", error);
+                    currentTrack.textContent = 'Unknown Title - Unknown Artist';
                     coverArt.src = ''; // default image or leave blank
                     coverArt.alt = 'No cover art available';
                 }
-            },
-            onError: function(error) {
-                console.error("Error reading metadata:", error);
-                currentTrack.textContent = 'Unknown Title - Unknown Artist';
-                coverArt.src = ''; // default image or leave blank
-                coverArt.alt = 'No cover art available';
-            }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching the song:', error);
+            currentTrack.textContent = 'Error loading song';
         });
-
+    
         updateTrackListHighlighting(songIndex);
     }
 
