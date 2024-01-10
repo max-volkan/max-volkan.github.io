@@ -45,6 +45,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     const title = tag.tags.title || "Unknown Title";
                     const artist = tag.tags.artist || "Unknown Artist";
                     currentTrack.textContent = `${title} - ${artist}`;
+
+                    document.getElementById('song-name').textContent = title;
+        document.getElementById('artist-name').textContent = artist;
+        document.getElementById('song-info').style.display = 'block'; // Show the song info
     
                     if (tag.tags.picture) {
                         let base64String = "";
@@ -64,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     currentTrack.textContent = 'Unknown Title - Unknown Artist';
                     coverArt.src = ''; // default image or leave blank
                     coverArt.alt = 'No cover art available';
+                    document.getElementById('song-info').style.display = 'none'; // Hide the song info
                 }
             });
         })
@@ -116,5 +121,30 @@ document.addEventListener('DOMContentLoaded', function() {
         loadSong(currentSongIndex).then(() => player.play());
     });
 
+    document.getElementById('volume-btn').addEventListener('click', function() {
+        if (player.volume > 0) {
+            player.volume = 0;
+            volumeControl.value = 0; // Update the slider position
+        } else {
+            player.volume = 1;
+            volumeControl.value = 1; // Update the slider position
+        }
+        updateSliderFill(); // Update the fill bar
+    });
+    function updateSliderFill() {
+        const fillPercentage = player.volume * 100;
+        volumeControl.style.setProperty('--fill-percentage', fillPercentage + '%');
+    }
+
+    // Initialize the slider fill on page load
+    updateSliderFill();
+
+    // Update the slider fill on input change
+    volumeControl.addEventListener('input', () => {
+        player.volume = volumeControl.value;
+        updateSliderFill();
+    });
+
     loadSong(currentSongIndex);
+    volumeControl.style.backgroundSize = (volumeControl.value * 100) + '% 100%';
 });
