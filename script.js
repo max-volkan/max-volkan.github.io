@@ -1,113 +1,107 @@
-const songs = [
-  "radio-song-crate-1/++.290.9109.19XXXXXXXXX.mp3",
-  "radio-song-crate-1/BeatPortfolio2 [c-lips].mp3",
-  "radio-song-crate-1/friday.mp3",
-  "radio-song-crate-1/hauntme.mp3",
-  "radio-song-crate-1/in the night.mp3",
-  "radio-song-crate-1/metgaler throwaway.mp3",
-  "radio-song-crate-1/outnabout.mp3",
-  "radio-song-crate-1/slowly, but surely.mp3",
-  "radio-song-crate-1/termination w orenji soul..mp3",
-  "radio-song-crate-1/THRUYASYSTEM!!!!!!.mp3",
-  // Add all your songs here
-];
 
-let currentSongIndex = 0;
-const player = document.getElementById('audio-player');
-const playBtn = document.getElementById('play-btn');
-const pauseBtn = document.getElementById('pause-btn');
-const currentTrack = document.getElementById('current-track');
-const volumeControl = document.getElementById('volume-control');
+// Assuming the global `musicMetadata` variable is available after loading the library via a script tag.
+document.addEventListener('DOMContentLoaded', function() {
+    const songs = [
+        "./radio-song-crate-1/++.290.9109.19XXXXXXXXX.mp3",
+        "./radio-song-crate-1/BeatPortfolio2 [c-lips].mp3",
+        "./radio-song-crate-1/friday.mp3",
+        "./radio-song-crate-1/hauntme.mp3",
+        "./radio-song-crate-1/in the night.mp3",
+        "./radio-song-crate-1/metgaler throwaway.mp3",
+        "./radio-song-crate-1/outnabout.mp3",
+        "./radio-song-crate-1/slowly, but surely.mp3",
+        "./radio-song-crate-1/termination w orenji soul..mp3",
+        "./radio-song-crate-1/THRUYASYSTEM!!!!!!.mp3",
+        // Add all your songs here
+      ];
+    let currentSongIndex = 0;
+    const player = document.getElementById('audio-player');
+    const playBtn = document.getElementById('play-btn');
+    const pauseBtn = document.getElementById('pause-btn');
+    const currentTrack = document.getElementById('current-track');
+    const volumeControl = document.getElementById('volume-control');
+    const trackListToggle = document.getElementById('tracklist-toggle');
+    const trackList = document.getElementById('track-list');
+    const coverArt = document.getElementById('cover-art');
 
-// Load song and update track info
-function loadSong(songIndex) {
-  const songPath = songs[songIndex];
-  player.src = songPath;
+    async function loadSong(songIndex) {
+        const songPath = songs[songIndex];
+        player.src = songPath;
 
-  // Use jsmediatags to read metadata
-  jsmediatags.read(songPath, {
-      onSuccess: function (tag) {
-          const tags = tag.tags;
-          const artist = tags.artist || "Unknown Artist";
-          const title = tags.title || "Unknown Title";
+        try {
+            const response = await fetch(songPath);
+            const arrayBuffer = await response.arrayBuffer();
+            const metadata = await musicMetadata.parseBlob(new Blob([arrayBuffer]));
 
-          // Update caption and current track text
-          document.getElementById('track-caption').textContent = `${title} - ${artist}`;
-          currentTrack.textContent = `${title} - ${artist}`;
+            // Extract and use metadata here
+            const title = metadata.common.title || "Unknown Title";
+            const artist = metadata.common.artist || "Unknown Artist";
+            currentTrack.textContent = `${title} - ${artist}`;
 
-          // Display cover art if available
-          if (tags.picture) {
-              let base64String = "";
-              for (let i = 0; i < tags.picture.data.length; i++) {
-                  base64String += String.fromCharCode(tags.picture.data[i]);
-              }
-              const imageUrl = "data:" + tags.picture.format + ";base64," + window.btoa(base64String);
-              document.getElementById('cover-art').src = imageUrl;
-          } else {
-              document.getElementById('cover-art').src = ''; // Set a default image or leave blank
-          }
-      },
-      onError: function (error) {
-          console.log(error);
-          // Handle errors or set default values
-          document.getElementById('track-caption').textContent = 'Unknown Title - Unknown Artist';
-          currentTrack.textContent = 'Unknown Title - Unknown Artist';
-          document.getElementById('cover-art').src = ''; // Set a default image or leave blank
-      }
-  });
+            // Update cover art
+            if (metadata.common.picture && metadata.common.picture.length > 0) {
+                const picture = metadata.common.picture[0];
+                const imageUrl = URL.createObjectURL(new Blob([picture.data], { type: picture.format }));
+                coverArt.src = imageUrl;
+                coverArt.alt = `Cover Art for ${title}`;
+            } else {
+                coverArt.src = ''; // default image or leave blank
+                coverArt.alt = 'No cover art available';
+            }
+        } catch (error) {
+            console.error("Error reading metadata:", error);
+            currentTrack.textContent = 'Unknown Title - Unknown Artist';
+            coverArt.src = ''; // default image or leave blank
+            coverArt.alt = 'No cover art available';
+        }
 
-  // Update the tracklist highlighting
-  document.querySelectorAll('#track-list li').forEach((li, index) => {
-      if (index === songIndex) {
-          li.classList.add('current-track');
-      } else {
-          li.classList.remove('current-track');
-      }
-  });
-}
+        updateTrackListHighlighting(songIndex);
+    }
 
-// Play and Pause functionality
-playBtn.addEventListener('click', function() {
-    player.play();
-    playBtn.style.display = 'none';
-    pauseBtn.style.display = 'inline';
-});
+    function updateTrackListHighlighting(activeIndex) {
+        document.querySelectorAll('#track-list li').forEach((li, index) => {
+            li.classList.toggle('current-track', index === activeIndex);
+        });
+    }
 
-pauseBtn.addEventListener('click', function() {
-    player.pause();
-    pauseBtn.style.display = 'none';
-    playBtn.style.display = 'inline';
-});
+    // Toggle track list visibility
+    trackListToggle.addEventListener('click', function() {
+        trackList.style.display = trackList.style.display === 'block' ? 'none' : 'block';
+    });
 
-// Volume Control
-volumeControl.addEventListener('input', function() {
-    player.volume = this.value;
-});
+    // Populate the tracklist and add click event to each track
+    songs.forEach((song, index) => {
+        const li = document.createElement('li');
+        li.textContent = song.split('/').pop();
+        li.addEventListener('click', () => {
+            currentSongIndex = index;
+            loadSong(currentSongIndex).then(() => player.play());
+        });
+        trackList.appendChild(li);
+    });
 
+    // Event listeners for player controls
+    playBtn.addEventListener('click', () => {
+        player.play();
+        playBtn.style.display = 'none';
+        pauseBtn.style.display = 'inline';
+    });
 
+    pauseBtn.addEventListener('click', () => {
+        player.pause();
+        pauseBtn.style.display = 'none';
+        playBtn.style.display = 'inline';
+    });
 
-// Load the first song initially and update track info
-loadSong(currentSongIndex);
+    volumeControl.addEventListener('input', () => {
+        player.volume = volumeControl.value;
+    });
 
-player.addEventListener('ended', function() {
-  currentSongIndex = (currentSongIndex + 1) % songs.length;
-  loadSong(currentSongIndex);
-  player.play();
-});
+    player.addEventListener('ended', () => {
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
+        loadSong(currentSongIndex).then(() => player.play());
+    });
 
-const trackListToggle = document.getElementById('tracklist-toggle');
-const trackList = document.getElementById('track-list');
-
-trackListToggle.addEventListener('click', function() {
-    trackList.style.display = trackList.style.display === 'none' ? 'block' : 'none';
-});
-
-songs.forEach((song, index) => {
-  let li = document.createElement('li');
-  li.textContent = (index === 0 ? "Now Playing: " : "Up Next: ") + song.split('/').pop();
-  li.addEventListener('click', () => {
-      loadSong(index);
-      player.play();
-  });
-  trackList.appendChild(li);
+    // Load the first song
+    loadSong(currentSongIndex);
 });
