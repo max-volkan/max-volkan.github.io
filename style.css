@@ -91,9 +91,20 @@ header nav ul li a:hover {
 
 /* Main Content */
 main {
-  margin-top: 0;
+  margin-top: 300px;
   text-align: center;
   
+}
+
+#radio-player {
+  /* Your custom styles */
+  text-align: center;
+  margin: 20px;
+}
+
+#audio-player {
+  /* Styles for the audio player */
+  width: 300px; /* Example width */
 }
 
 /* Footer */
