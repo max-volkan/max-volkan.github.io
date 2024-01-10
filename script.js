@@ -1,6 +1,7 @@
 
 // Assuming the global `musicMetadata` variable is available after loading the library via a script tag.
 document.addEventListener('DOMContentLoaded', function() {
+    
     const songs = [
         "./radio-song-crate-1/++.290.9109.19XXXXXXXXX.mp3",
         "./radio-song-crate-1/BeatPortfolio2 [c-lips].mp3",
@@ -104,4 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load the first song
     loadSong(currentSongIndex);
+
+    
 });
