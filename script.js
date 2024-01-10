@@ -1,7 +1,4 @@
-
-// Assuming the global `musicMetadata` variable is available after loading the library via a script tag.
 document.addEventListener('DOMContentLoaded', function() {
-    
     const songs = [
         "./radio-song-crate-1/++.290.9109.19XXXXXXXXX.mp3",
         "./radio-song-crate-1/BeatPortfolio2 [c-lips].mp3",
@@ -14,7 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
         "./radio-song-crate-1/termination w orenji soul..mp3",
         "./radio-song-crate-1/THRUYASYSTEM!!!!!!.mp3",
         // Add all your songs here
-      ];
+    ];
+
+
     let currentSongIndex = 0;
     const player = document.getElementById('audio-player');
     const playBtn = document.getElementById('play-btn');
@@ -29,32 +28,32 @@ document.addEventListener('DOMContentLoaded', function() {
         const songPath = songs[songIndex];
         player.src = songPath;
 
-        try {
-            const response = await fetch(songPath);
-            const arrayBuffer = await response.arrayBuffer();
-            const metadata = await musicMetadata.parseBlob(new Blob([arrayBuffer]));
+        jsmediatags.read(songPath, {
+            onSuccess: function(tag) {
+                const title = tag.tags.title || "Unknown Title";
+                const artist = tag.tags.artist || "Unknown Artist";
+                currentTrack.textContent = `${title} - ${artist}`;
 
-            // Extract and use metadata here
-            const title = metadata.common.title || "Unknown Title";
-            const artist = metadata.common.artist || "Unknown Artist";
-            currentTrack.textContent = `${title} - ${artist}`;
-
-            // Update cover art
-            if (metadata.common.picture && metadata.common.picture.length > 0) {
-                const picture = metadata.common.picture[0];
-                const imageUrl = URL.createObjectURL(new Blob([picture.data], { type: picture.format }));
-                coverArt.src = imageUrl;
-                coverArt.alt = `Cover Art for ${title}`;
-            } else {
+                if (tag.tags.picture) {
+                    let base64String = "";
+                    for (let i = 0; i < tag.tags.picture.data.length; i++) {
+                        base64String += String.fromCharCode(tag.tags.picture.data[i]);
+                    }
+                    const imageUrl = "data:" + tag.tags.picture.format + ";base64," + window.btoa(base64String);
+                    coverArt.src = imageUrl;
+                    coverArt.alt = `Cover Art for ${title}`;
+                } else {
+                    coverArt.src = ''; // default image or leave blank
+                    coverArt.alt = 'No cover art available';
+                }
+            },
+            onError: function(error) {
+                console.error("Error reading metadata:", error);
+                currentTrack.textContent = 'Unknown Title - Unknown Artist';
                 coverArt.src = ''; // default image or leave blank
                 coverArt.alt = 'No cover art available';
             }
-        } catch (error) {
-            console.error("Error reading metadata:", error);
-            currentTrack.textContent = 'Unknown Title - Unknown Artist';
-            coverArt.src = ''; // default image or leave blank
-            coverArt.alt = 'No cover art available';
-        }
+        });
 
         updateTrackListHighlighting(songIndex);
     }
@@ -65,12 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Toggle track list visibility
     trackListToggle.addEventListener('click', function() {
         trackList.style.display = trackList.style.display === 'block' ? 'none' : 'block';
     });
 
-    // Populate the tracklist and add click event to each track
     songs.forEach((song, index) => {
         const li = document.createElement('li');
         li.textContent = song.split('/').pop();
@@ -81,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
         trackList.appendChild(li);
     });
 
-    // Event listeners for player controls
     playBtn.addEventListener('click', () => {
         player.play();
         playBtn.style.display = 'none';
@@ -103,8 +99,5 @@ document.addEventListener('DOMContentLoaded', function() {
         loadSong(currentSongIndex).then(() => player.play());
     });
 
-    // Load the first song
     loadSong(currentSongIndex);
-
-    
 });
