@@ -96,15 +96,27 @@ main {
   
 }
 
-#radio-player {
-  /* Your custom styles */
-  text-align: center;
-  margin: 20px;
+#player-controls button img {
+  height: 30px; /* Example size, adjust as needed */
+  width: auto;
 }
 
-#audio-player {
-  /* Styles for the audio player */
-  width: 300px; /* Example width */
+#tracklist-toggle {
+  /* Style for tracklist toggle button */
+  cursor: pointer;
+  /* ... additional styling ... */
+}
+
+#track-list {
+  list-style-type: none;
+  /* Style for the dropdown */
+  /* ... additional styling ... */
+  display: none; /* Initially hidden */
+}
+
+/* SVG button styles (adjust as per your SVGs) */
+#play-btn svg, #pause-btn svg, #volume-btn svg {
+  /* Common styles for SVG icons */
 }
 
 /* Footer */
