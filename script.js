@@ -1,33 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Function to fetch metadata from the server
-    function fetchMetadata() {
-        fetch('http://54.193.138.44:8000/status-json.xsl')
-            .then(response => response.json())
-            .then(data => {
-                const title = data.icestats.source.title;
-                // Assuming the format is "artist - songTitle"
-                const [artist, songTitle] = title.split(' - ');
-    
-                document.getElementById('song-name').textContent = songTitle || "Unknown Title";
-                document.getElementById('artist-name').textContent = artist || "Unknown Artist";
-            })
-            .catch(error => console.error('Error fetching metadata:', error));
-    }
-    
-    // Fetch metadata initially and then every 10 seconds
-    fetchMetadata();
-    setInterval(fetchMetadata, 10000);
-    
-
     const player = document.getElementById('audio-player');
     const playBtn = document.getElementById('play-btn');
     const pauseBtn = document.getElementById('pause-btn');
     const volumeControl = document.getElementById('volume-control');
+    const songName = document.getElementById('song-name');
+    const artistName = document.getElementById('artist-name');
 
-    // Initialize the Icecast stream
-    player.src = 'http://54.193.138.44:8000/stream';
+    function fetchMetadata() {
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const icecastUrl = 'http://54.193.138.44:8000/status-json.xsl';
 
-    // Play/Pause functionality
+        fetch(proxyUrl + icecastUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Assuming that metadata is in data.icestats.source.title
+                const metadata = data.icestats.source.title.split(' - ');
+                songName.textContent = metadata[0] || 'Unknown Song';
+                artistName.textContent = metadata[1] || 'Unknown Artist';
+            })
+            .catch(error => console.error('Error fetching metadata:', error));
+    }
+
+    // Fetch metadata initially and then every 10 seconds
+    fetchMetadata();
+    setInterval(fetchMetadata, 10000);
+
     playBtn.addEventListener('click', () => {
         player.play();
         playBtn.style.display = 'none';
@@ -40,28 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
         playBtn.style.display = 'inline';
     });
 
-    // Volume Control
-    let lastVolume = 0.1;
-
     volumeControl.addEventListener('input', () => {
         player.volume = volumeControl.value;
         updateSliderFill();
         toggleVolumeIcon(player.volume === 0);
-    });
-
-    document.getElementById('volume-btn').addEventListener('click', function() {
-        if (player.volume > 0) {
-            lastVolume = player.volume;
-            player.volume = 0;
-            volumeControl.value = 0;
-            updateSliderFill();
-            toggleVolumeIcon(true);
-        } else {
-            player.volume = lastVolume;
-            volumeControl.value = lastVolume;
-            updateSliderFill();
-            toggleVolumeIcon(false);
-        }
     });
 
     function toggleVolumeIcon(isMuted) {
@@ -82,5 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
         volumeControl.style.setProperty('--fill-percentage', fillPercentage + '%');
     }
 
+    // Initialize the slider fill on page load
     updateSliderFill();
 });
