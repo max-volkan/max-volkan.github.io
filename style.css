@@ -150,6 +150,10 @@ main {
   margin: auto; /* Centering #now-playing if needed */
 }
 
+#current-track {
+  display: none;
+}
+
 #cover-art {
   width: 100%; /* It will take the full width of #now-playing */
   height: 100%; /* It will take the full height of #now-playing */

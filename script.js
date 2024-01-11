@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const trackList = document.getElementById('track-list');
     const coverArt = document.getElementById('cover-art');
 
-    async function loadSong(songIndex) {
+    function loadSong(songIndex) {
+    return new Promise((resolve, reject) => {
         const songPath = songs[songIndex];
         
         // Fetch the song as a Blob from the server
@@ -47,9 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     currentTrack.textContent = `${title} - ${artist}`;
 
                     document.getElementById('song-name').textContent = title;
-        document.getElementById('artist-name').textContent = artist;
-        document.getElementById('song-info').style.display = 'block'; // Show the song info
-    
+                    document.getElementById('artist-name').textContent = artist;
+                    document.getElementById('song-info').style.display = 'block';
+
                     if (tag.tags.picture) {
                         let base64String = "";
                         for (let i = 0; i < tag.tags.picture.data.length; i++) {
@@ -62,22 +63,26 @@ document.addEventListener('DOMContentLoaded', function() {
                         coverArt.src = ''; // default image or leave blank
                         coverArt.alt = 'No cover art available';
                     }
+                    const nextIndex = (songIndex + 1) % songs.length;
+                    updateNextTrackInfo(nextIndex); // Update next track info here
+                    resolve();
                 },
                 onError: function(error) {
                     console.error("Error reading metadata:", error);
                     currentTrack.textContent = 'Unknown Title - Unknown Artist';
                     coverArt.src = ''; // default image or leave blank
                     coverArt.alt = 'No cover art available';
-                    document.getElementById('song-info').style.display = 'none'; // Hide the song info
+                    document.getElementById('song-info').style.display = 'none';
+                    reject(error); // Reject the promise on error
                 }
             });
         })
-        .catch(error => {
-            console.error('Error fetching the song:', error);
-            currentTrack.textContent = 'Error loading song';
+            .catch(error => {
+                console.error('Error fetching the song:', error);
+                currentTrack.textContent = 'Error loading song';
+                reject(error); // Reject the promise on error
+            });
         });
-    
-        updateTrackListHighlighting(songIndex);
     }
 
     function updateTrackListHighlighting(activeIndex) {
@@ -86,16 +91,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function updateNextTrackInfo(nextIndex) {
+        // Assuming the song title and artist can be derived from the song file name
+        // Modify this logic based on how your song titles and artist names are formatted
+        const nextSong = songs[nextIndex];
+        const songDetails = nextSong.split('/').pop().split('.')[0]; // Example: 'songTitle - artistName'
+        document.getElementById('next-track').textContent = songDetails;
+    }
+
     trackListToggle.addEventListener('click', function() {
         trackList.style.display = trackList.style.display === 'block' ? 'none' : 'block';
     });
 
     songs.forEach((song, index) => {
         const li = document.createElement('li');
-        li.textContent = song.split('/').pop();
+        li.textContent = song.split('/').pop(); // Extract the song name from the path
         li.addEventListener('click', () => {
             currentSongIndex = index;
-            loadSong(currentSongIndex).then(() => player.play());
+            loadSong(currentSongIndex).then(() => {
+                player.play(); // Start playing after loading the song
+            });
         });
         trackList.appendChild(li);
     });
