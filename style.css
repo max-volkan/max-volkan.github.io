@@ -5,6 +5,12 @@
   box-sizing: border-box;
 }
 
+button svg, button svg:focus, button svg:active, button svg:hover {
+  width: 50px; /* Your desired width */
+  height: 50px; /* Your desired height */
+  transition: none; /* Removes any transition effects */
+}
+
 body {
   position: relative;
   font-family: 'Work Sans', Arial, sans-serif;
@@ -58,7 +64,6 @@ input[type=range] {
   -webkit-appearance: none;
   width: 100px; /* Slightly increase the width */
   height: 8px;
-  border-radius: 5px;
   outline: none;
   margin-left: 5px; /* Space between volume button and slider */
   background: linear-gradient(to right, white 0%, white var(--fill-percentage, 50%), black var(--fill-percentage, 50%), black 100%);
@@ -70,7 +75,6 @@ input[type=range]::-webkit-slider-thumb {
   border: 2px solid black;
   height: 20px;
   width: 20px;
-  border-radius: 50%;
   background: white;
   position: relative;
   margin-top: 0px; /* Adjust this to center the thumb */
@@ -141,42 +145,60 @@ main {
 
 #now-playing {
   position: relative;
-  /* Other styles if needed */
+  width: 400px; /* Make sure this matches the actual size of the cover art */
+  height: 400px;
+  margin: auto; /* Centering #now-playing if needed */
 }
 
 #cover-art {
-  /* Adjust the size as needed */
-  width: 100px; 
-  height: 300px;
+  width: 100%; /* It will take the full width of #now-playing */
+  height: 100%; /* It will take the full height of #now-playing */
 }
 
 #song-info {
   position: absolute;
-  bottom: 0; /* Align to bottom of the cover art */
-  left: 0; /* Align to left of the cover art */
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  bottom: 5px;
+  left: 5px;
+  background-color: rgba(0, 0, 0, 1);
   color: white;
-  padding: 5px; /* Adjust as needed */
-  max-width: 50%; /* Adjust as needed for desired width */
-  white-space: nowrap; /* Prevents text wrapping */
+  padding: 5px 10px;
+  max-width: calc(100% - 20px); /* To ensure it doesn't overflow */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Adds an ellipsis if text overflows */
+  text-overflow: ellipsis;
 }
 
 #song-name, #artist-name {
   margin: 0 5px; /* Adjust spacing as needed */
 }
 
+button#volume-btn {
+  width: 54px;
+  height: 57px;
+  padding: 0;
+  border: none;
+  box-sizing: border-box; /* This ensures padding and border are included in total width/height */
+}
 
+#volume-icon, #mute-icon {
+  width: 50px;
+  height: 50px;
+}
+
+button#volume-btn {
+  display: inline-block;
+  vertical-align: middle; /* Adjust alignment as needed */
+}
 
 #player-controls button img {
   height: 30px; /* Example size, adjust as needed */
   width: auto;
-  #player-controls {
-    display: flex;
-    align-items: center;
 }
+button {
+  vertical-align: middle;
+  /* Other styling as needed */
 }
+
 
 #tracklist-toggle {
   /* Style for tracklist toggle button */
@@ -191,10 +213,7 @@ main {
   display: none; /* Initially hidden */
 }
 
-/* SVG button styles (adjust as per your SVGs) */
-#play-btn svg, #pause-btn svg, #volume-btn svg {
-  /* Common styles for SVG icons */
-}
+
 
 /* Footer */
 footer {

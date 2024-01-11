@@ -121,16 +121,46 @@ document.addEventListener('DOMContentLoaded', function() {
         loadSong(currentSongIndex).then(() => player.play());
     });
 
+    let lastVolume = 0.1; // Default volume when unmuting from 0
+
     document.getElementById('volume-btn').addEventListener('click', function() {
         if (player.volume > 0) {
+            lastVolume = player.volume;
             player.volume = 0;
-            volumeControl.value = 0; // Update the slider position
+            volumeControl.value = 0;
+            updateSliderFill();
+            toggleVolumeIcon(true);
         } else {
-            player.volume = 1;
-            volumeControl.value = 1; // Update the slider position
+            player.volume = lastVolume;
+            volumeControl.value = lastVolume;
+            updateSliderFill();
+            toggleVolumeIcon(false);
         }
-        updateSliderFill(); // Update the fill bar
     });
+
+    volumeControl.addEventListener('input', () => {
+        player.volume = volumeControl.value;
+        updateSliderFill();
+        toggleVolumeIcon(player.volume === 0);
+    });
+
+    function toggleVolumeIcon(isMuted) {
+        const volumeIcon = document.getElementById('volume-icon');
+        const muteIcon = document.getElementById('mute-icon');
+    
+        if (isMuted) {
+            volumeIcon.style.display = 'none';
+            muteIcon.style.display = 'block';
+            muteIcon.setAttribute("width", "50px");
+            muteIcon.setAttribute("height", "50px");
+        } else {
+            volumeIcon.style.display = 'block';
+            muteIcon.style.display = 'none';
+            volumeIcon.setAttribute("width", "50px");
+            volumeIcon.setAttribute("height", "50px");
+        }
+    }
+
     function updateSliderFill() {
         const fillPercentage = player.volume * 100;
         volumeControl.style.setProperty('--fill-percentage', fillPercentage + '%');
@@ -138,13 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize the slider fill on page load
     updateSliderFill();
-
-    // Update the slider fill on input change
-    volumeControl.addEventListener('input', () => {
-        player.volume = volumeControl.value;
-        updateSliderFill();
-    });
-
+   
     loadSong(currentSongIndex);
     volumeControl.style.backgroundSize = (volumeControl.value * 100) + '% 100%';
 });
