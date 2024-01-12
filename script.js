@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function fetchMetadata() {
-        fetch('http://24.199.72.194:8000/status-json.xsl')
+        fetch('https://stream.maxp3.xyz/status-json.xsl')
             .then(response => response.json())
             .then(data => {
                 // Process your data here
