@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const songName = document.getElementById('song-name');
     const artistName = document.getElementById('artist-name');
 
+    player.volume = 0.5; // Set a default volume level, e.g., 50%
+    volumeControl.value = player.volume; // Update the slider to match
+    updateSliderFill(); // Update the visual fill of the slider
 
     function fetchMetadata() {
         fetch('https://stream.maxp3.xyz/status-json.xsl')
@@ -22,6 +25,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch metadata initially and then every 10 seconds
     fetchMetadata();
     setInterval(fetchMetadata, 10000);
+
+    const loadingIndicator = document.getElementById('loading-indicator');
+
+    player.onplay = function() {
+        loadingIndicator.style.display = 'block';
+    };
+
+    player.onplaying = function() {
+        loadingIndicator.style.display = 'none';
+    };
 
     playBtn.addEventListener('click', () => {
         player.play();
