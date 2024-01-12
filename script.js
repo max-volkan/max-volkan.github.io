@@ -6,21 +6,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const songName = document.getElementById('song-name');
     const artistName = document.getElementById('artist-name');
 
-    function fetchMetadata() {
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        const icecastUrl = 'http://54.193.138.44:8000/status-json.xsl';
 
-        fetch(proxyUrl + icecastUrl)
+    function fetchMetadata() {
+        fetch('http://50.18.185.209:8000/status-json.xsl')
             .then(response => response.json())
             .then(data => {
-                // Assuming that metadata is in data.icestats.source.title
+                // Process your data here
                 const metadata = data.icestats.source.title.split(' - ');
                 songName.textContent = metadata[0] || 'Unknown Song';
                 artistName.textContent = metadata[1] || 'Unknown Artist';
             })
             .catch(error => console.error('Error fetching metadata:', error));
     }
-
+   
     // Fetch metadata initially and then every 10 seconds
     fetchMetadata();
     setInterval(fetchMetadata, 10000);
