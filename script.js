@@ -14,23 +14,29 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch('https://stream.maxp3.xyz/status-json.xsl')
             .then(response => response.json())
             .then(data => {
-                // Process your data here
+                console.log('Icecast data:', data);  // Log raw Icecast data
                 const metadata = data.icestats.source.title.split(' - ');
+                console.log('Parsed title and artist:', metadata);  // Log parsed title and artist
                 songName.textContent = metadata[0] || 'Unknown Song';
                 artistName.textContent = metadata[1] || 'Unknown Artist';
 
                 updateCoverArt(metadata[0], metadata[1]);
             })
-            .catch(error => console.error('Error fetching metadata:', error));
+            .catch(error => {
+                console.error('Error fetching Icecast metadata:', error);
+            });
     }
    
-    function updateCoverArt(songTitle, artistName) {
+    function updateCoverArt(artistName, songTitle) {
         fetch('./metadata.json')
             .then(response => response.json())
             .then(allMetadata => {
-                const songMetadata = allMetadata.find(meta => meta.title === songTitle && meta.artist === artistName);
+                // Ensure the artist and title match the format in metadata.json
+                const songMetadata = allMetadata.find(meta => meta.artist === artistName && meta.title.includes(songTitle));
                 if (songMetadata && songMetadata.cover_art) {
                     document.getElementById('cover-art').src = `./radio-song-crate-1/cover_arts/${songMetadata.cover_art}`;
+                } else {
+                    console.log('No matching metadata found for:', artistName, songTitle);
                 }
             })
             .catch(error => console.error('Error fetching cover art metadata:', error));
