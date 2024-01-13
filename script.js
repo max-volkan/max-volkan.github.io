@@ -18,10 +18,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 const metadata = data.icestats.source.title.split(' - ');
                 songName.textContent = metadata[0] || 'Unknown Song';
                 artistName.textContent = metadata[1] || 'Unknown Artist';
+
+                updateCoverArt(metadata[0], metadata[1]);
             })
             .catch(error => console.error('Error fetching metadata:', error));
     }
    
+    function updateCoverArt(songTitle, artistName) {
+        fetch('./metadata.json')
+            .then(response => response.json())
+            .then(allMetadata => {
+                const songMetadata = allMetadata.find(meta => meta.title === songTitle && meta.artist === artistName);
+                if (songMetadata && songMetadata.cover_art) {
+                    document.getElementById('cover-art').src = `./radio-song-crate-1/cover_arts/${songMetadata.cover_art}`;
+                }
+            })
+            .catch(error => console.error('Error fetching cover art metadata:', error));
+    }
+
     // Fetch metadata initially and then every 10 seconds
     fetchMetadata();
     setInterval(fetchMetadata, 10000);
