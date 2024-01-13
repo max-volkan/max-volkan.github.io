@@ -59,43 +59,47 @@ header {
   z-index: 10;
 }
 
-/*volume slider*/
+/* Volume Slider Styling */
 input[type=range] {
-  -webkit-appearance: none;
-  width: 100px; /* Slightly increase the width */
-  height: 8px;
-  outline: none;
-  margin-left: 5px; /* Space between volume button and slider */
+  -webkit-appearance: none; /* Override default appearance */
+  appearance: none;
+  width: 200px; /* Increased width for better interaction */
+  height: 10px; /* Thicker track for visibility */
   background: linear-gradient(to right, white 0%, white var(--fill-percentage, 50%), black var(--fill-percentage, 50%), black 100%);
   border: 1px solid white;
 }
 
+#play-btn:active, #pause-btn:active {
+  transform: scale(0.95); /* Slightly shrink buttons when clicked */
+}
+
+input[type=range]:focus {
+  outline: none; /* Remove the focus outline */
+}
+
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  border: 2px solid black;
-  height: 20px;
+  height: 20px; /* Larger thumb for easier interaction */
   width: 20px;
-  background: white;
-  position: relative;
-  margin-top: 0px; /* Adjust this to center the thumb */
+  background: #ffffff; /* Vibrant green thumb */
   cursor: pointer;
-  /* Extend the thumb's clickable area */
-  box-shadow: -10px 0 0 10px transparent, 10px 0 0 10px transparent; 
+  border: 2px solid black;
 }
+
+
 
 /* Firefox */
 input[type=range]::-moz-range-thumb {
-  border: 2px solid black;
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  background: white;
+  height: 20px; /* Larger thumb for easier interaction */
+  width: 20px;
+  background: #ffffff; /* Vibrant green thumb */
   cursor: pointer;
+  border: 2px solid black;
 }
 
 input[type=range]::-moz-range-track {
-  height: 8px;
-  border-radius: 5px;
+  width: 200px; /* Increased width for better interaction */
+  height: 10px; /* Thicker track for visibility */
   background: linear-gradient(to right, white 0%, white var(--fill-percentage, 50%), black var(--fill-percentage, 50%), black 100%);
   border: 1px solid white;
 }
@@ -189,9 +193,74 @@ button#volume-btn {
   height: 50px;
 }
 
+/* Volume Button Styling */
 button#volume-btn {
-  display: inline-block;
-  vertical-align: middle; /* Adjust alignment as needed */
+  background-color: #ffffff; /* Mint green background */
+  border: 2px solid #FFFFFF; /* White border */
+  padding: 10px; /* Padding to increase clickable area */
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Button shadow */
+}
+
+button#volume-btn:hover {
+  background-color: #ffffff; /* Lighter green on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+}
+
+button#volume-btn:active {
+  transform: scale(0.9); /* Slightly shrink button when clicked */
+}
+
+button svg {
+  fill: white; /* SVG color */
+  transition: fill 0.3s ease;
+}
+button:hover svg {
+  fill: #e6e6e6; /* Lighter color on hover */
+}
+
+/* Adding an animation to the SVG to rotate it, giving it a playful feel */
+button#volume-btn svg {
+  transition: transform 0.3s ease;
+}
+
+button#volume-btn:active svg {
+  transform: rotate(20deg); /* Rotate SVG slightly when active */
+}
+
+/* If you have different SVGs for volume (like mute/unmute), you can toggle their visibility */
+#volume-icon {
+  display: block; /* Shown by default */
+}
+
+#mute-icon {
+  display: none; /* Hidden by default */
+}
+
+/* Player Controls Styling */
+#player-controls {
+  display: flex;
+  justify-content: center; /* Center the controls */
+  align-items: center; /* Align vertically */
+  padding: 20px;
+  gap: 10px; /* Space between controls */
+  background: rgba(255, 255, 255, 0.02); /* Semi-transparent background */
+  margin: 20px auto; /* Center the control bar */
+  max-width: 600px; /* Maximum width of the control bar */
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.04); /* Add some shadow for depth */
+}
+
+#play-btn:hover, #pause-btn:hover {
+  transform: scale(1.1); /* Slightly enlarge buttons on hover */
+}
+
+/* Play/Pause Button Styling */
+#play-btn, #pause-btn {
+  background: white;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 #player-controls button img {

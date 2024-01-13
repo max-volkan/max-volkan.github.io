@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     playBtn.addEventListener('click', () => {
+        // Set the src to the live stream URL to catch up to the live point
+        player.src = "https://stream.maxp3.xyz/stream";
+        player.load(); // Load the new source
         player.play();
         playBtn.style.display = 'none';
         pauseBtn.style.display = 'inline';
@@ -74,18 +77,15 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleVolumeIcon(player.volume === 0);
     });
 
-    function toggleVolumeIcon(isMuted) {
-        const volumeIcon = document.getElementById('volume-icon');
-        const muteIcon = document.getElementById('mute-icon');
-    
-        if (isMuted) {
-            volumeIcon.style.display = 'none';
-            muteIcon.style.display = 'block';
+    player.addEventListener('volumechange', () => {
+        if (player.volume === 0) {
+          document.getElementById('volume-icon').style.display = 'none';
+          document.getElementById('mute-icon').style.display = 'block';
         } else {
-            volumeIcon.style.display = 'block';
-            muteIcon.style.display = 'none';
+          document.getElementById('volume-icon').style.display = 'block';
+          document.getElementById('mute-icon').style.display = 'none';
         }
-    }
+      });
 
     function updateSliderFill() {
         const fillPercentage = player.volume * 100;
