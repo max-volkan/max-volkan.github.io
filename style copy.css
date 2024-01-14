@@ -1,0 +1,334 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button svg, button svg:focus, button svg:active, button svg:hover {
+  width: 50px; /* Your desired width */
+  height: 50px; /* Your desired height */
+  transition: none; /* Removes any transition effects */
+}
+
+body {
+  position: relative;
+  font-family: 'Work Sans', Arial, sans-serif;
+  color: #fff;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevents horizontal scrollbar */
+}
+body::before, body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+body::before {
+  background-image: url('./assets/space bg.gif');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+body::after {
+  background: rgba(0, 0, 0, 0.65); /* Adjust opacity as needed */
+}
+
+header, header * {
+  background: transparent !important;
+}
+
+/* Header and Navigation */
+header {
+  background: none !important; /* Ensuring no background color */
+  color: #fff;
+  padding: 10px; /* Adjust as needed for spacing from the top and right */
+  text-align: right;
+  position: fixed;
+  top: 0; /* Align to the top */
+  right: 0; /* Align to the right */
+  left: 0; /* Stretch across the top */
+  width: 100%;
+  z-index: 10;
+}
+
+/* Volume Slider Styling */
+input[type=range] {
+  -webkit-appearance: none; /* Override default appearance */
+  appearance: none;
+  width: 200px; /* Increased width for better interaction */
+  height: 10px; /* Thicker track for visibility */
+  background: linear-gradient(to right, white 0%, white var(--fill-percentage, 50%), black var(--fill-percentage, 50%), black 100%);
+  border: 1px solid white;
+}
+
+#play-btn:active, #pause-btn:active {
+  transform: scale(0.95); /* Slightly shrink buttons when clicked */
+}
+
+input[type=range]:focus {
+  outline: none; /* Remove the focus outline */
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px; /* Larger thumb for easier interaction */
+  width: 20px;
+  background: #ffffff; /* Vibrant green thumb */
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+
+
+/* Firefox */
+input[type=range]::-moz-range-thumb {
+  height: 20px; /* Larger thumb for easier interaction */
+  width: 20px;
+  background: #ffffff; /* Vibrant green thumb */
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+input[type=range]::-moz-range-track {
+  width: 200px; /* Increased width for better interaction */
+  height: 10px; /* Thicker track for visibility */
+  background: linear-gradient(to right, white 0%, white var(--fill-percentage, 50%), black var(--fill-percentage, 50%), black 100%);
+  border: 1px solid white;
+}
+
+header nav {
+  display: flex;
+  justify-content: flex-end; /* Aligns content to the end on the main-axis (right) */
+  align-items: flex-start; /* Aligns items to the start of the cross-axis (top) */
+  height: 100%;
+}
+
+header nav ul {
+  margin-top: 20px; /* Ensure the list is at the top of the nav */
+  padding-top: 0; /* Adjust if needed */
+  list-style: none;
+  display: flex;
+  height: 100%; /* Full height of the nav */
+}
+
+header nav ul li {
+  margin-left: 20px;
+  padding-top: 0;
+}
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+header nav ul li a:hover {
+  color: rgb(61, 61, 61);
+}
+
+.logo {
+  height: 120px; /* Adjust as needed */
+  margin-left: 20px;
+  padding: 10px 20px;
+}
+
+/* Main Content */
+main {
+  margin-top: 300px;
+  text-align: center;
+  
+}
+
+#now-playing {
+  position: relative;
+  width: 400px; /* Make sure this matches the actual size of the cover art */
+  height: 400px;
+  margin: auto; /* Centering #now-playing if needed */
+}
+
+#current-track {
+  display: none;
+}
+
+#cover-art {
+  width: 100%; /* It will take the full width of #now-playing */
+  height: 100%; /* It will take the full height of #now-playing */
+}
+
+#song-info {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  background-color: rgba(0, 0, 0, 1);
+  color: white;
+  padding: 5px 10px;
+  max-width: calc(100% - 20px); /* To ensure it doesn't overflow */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#song-name, #artist-name {
+  margin: 0 5px; /* Adjust spacing as needed */
+}
+
+button#volume-btn {
+  width: 54px;
+  height: 57px;
+  padding: 0;
+  border: none;
+  box-sizing: border-box; /* This ensures padding and border are included in total width/height */
+}
+
+#volume-icon, #mute-icon {
+  width: 50px;
+  height: 50px;
+}
+
+/* Volume Button Styling */
+button#volume-btn {
+  background-color: #ffffff; /* Mint green background */
+  border: 2px solid #FFFFFF; /* White border */
+  padding: 10px; /* Padding to increase clickable area */
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Button shadow */
+}
+
+button#volume-btn:hover {
+  background-color: #ffffff; /* Lighter green on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+}
+
+button#volume-btn:active {
+  transform: scale(0.9); /* Slightly shrink button when clicked */
+}
+
+button svg {
+  fill: white; /* SVG color */
+  transition: fill 0.3s ease;
+}
+button:hover svg {
+  fill: #e6e6e6; /* Lighter color on hover */
+}
+
+/* Adding an animation to the SVG to rotate it, giving it a playful feel */
+button#volume-btn svg {
+  transition: transform 0.3s ease;
+}
+
+button#volume-btn:active svg {
+  transform: rotate(20deg); /* Rotate SVG slightly when active */
+}
+
+/* If you have different SVGs for volume (like mute/unmute), you can toggle their visibility */
+#volume-icon {
+  display: block; /* Shown by default */
+}
+
+#mute-icon {
+  display: none; /* Hidden by default */
+}
+
+/* Player Controls Styling */
+#player-controls {
+  display: flex;
+  justify-content: center; /* Center the controls */
+  align-items: center; /* Align vertically */
+  padding: 20px;
+  gap: 10px; /* Space between controls */
+  background: rgba(255, 255, 255, 0.02); /* Semi-transparent background */
+  margin: 20px auto; /* Center the control bar */
+  max-width: 600px; /* Maximum width of the control bar */
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.04); /* Add some shadow for depth */
+}
+
+#play-btn:hover, #pause-btn:hover {
+  transform: scale(1.1); /* Slightly enlarge buttons on hover */
+}
+
+/* Play/Pause Button Styling */
+#play-btn, #pause-btn {
+  background: white;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#player-controls button img {
+  height: 30px; /* Example size, adjust as needed */
+  width: auto;
+}
+button {
+  vertical-align: middle;
+  /* Other styling as needed */
+}
+
+
+#tracklist-toggle {
+  /* Style for tracklist toggle button */
+  cursor: pointer;
+  /* ... additional styling ... */
+}
+
+#track-list {
+  list-style-type: none;
+  /* Style for the dropdown */
+  /* ... additional styling ... */
+  display: none; /* Initially hidden */
+}
+
+
+
+/* Footer */
+footer {
+  background: #111;
+  color: #fff;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header nav ul {
+    
+      flex-direction: column;
+      align-items: flex-end;
+  }
+
+  header nav ul li {
+      margin-top: 10px;
+  }
+}
+
+/* Webkit Scrollbars for Chrome, Safari, and newer versions of Opera */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Track background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fff; /* Thumb color */
+  border-radius: 6px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ddd; /* Color when hovered */
+}
+
+/* Scrollbar for Firefox */
+* {
+  scrollbar-width: thin; /* 'auto' or 'thin' */
+  scrollbar-color: #fff transparent; /* Thumb and track color */
+}
+

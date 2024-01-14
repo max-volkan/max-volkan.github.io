@@ -13,10 +13,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden; /* Prevents horizontal scrollbar */
-  display: flex;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically */
-  min-height: 100vh; /* At least full viewport height */
+  
 }
 body::before, body::after {
   content: '';
@@ -149,37 +146,10 @@ main {
   text-align: center;
 }
 
-#cover-art:before {
-  content: '';
-  position: absolute;
-  top: -5px; /* Adjust these values to match the border */
-  right: -5px;
-  bottom: -5px;
-  left: -5px;
-  border: 5px solid #333; /* Bezel color */
-  border-radius: 8px; /* Slightly less than the image's border-radius */
-  z-index: -1; /* Render behind the cover art */
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); /* Optional: add some depth to the bezel */
-}
-
 #cover-art {
-  display: block;
   max-width: 100%;
   height: auto;
-  border: 2px solid #fff; /* Simulate the screen border */
-  border-radius: 3px;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1); /* Inner shadow for the screen effect */
-  background: repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.1) 0px,
-      rgba(255, 255, 255, 0.1) 1px,
-      transparent 1px,
-      transparent 2px
-    ),
-    url('./assets/lcd screen effect.jpg');
-  background-size: cover;
-  position: relative; /* For the pseudo-element */
-  z-index: 1; /* Ensure it's above the pseudo-element */
+  border: 3px solid #fff; /* White border around cover image */
 }
 
 #song-info {
@@ -192,10 +162,8 @@ main {
   min-width: 0; /* Allow the container to shrink */
   max-width: calc(100% - 20px); /* Your existing max-width */
   white-space: nowrap;
-  text-shadow: 0 0 3px rgb(255, 255, 255); /* Glowing text effect */
   overflow: hidden;
   transition: width 0.5s ease;
-  z-index: 2;
 }
 
 .fade-in {
@@ -278,7 +246,6 @@ button#volume-btn {
   padding: 5px;
   background: transparent;
   border-top: 5px solid #ffffff;
-  
 }
 
 #play-btn:hover, #pause-btn:hover, #heart-btn:hover {
@@ -300,201 +267,17 @@ button#volume-btn {
   /* Your heart button styling */
 }
 
-.pocket-radio {
-  background: #e1e1e1; /* Color of the radio */
-  border: 3px solid #000; /* Border to mimic plastic */
-  border-radius: 10px; /* Rounded corners */
-  width: 900px; /* Adjust size as needed */
-  padding: 10px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-  text-align: center;
+#pocket-radio {
+  display: grid;
+  grid-template-columns: 1fr; /* Three columns layout */
+  grid-template-rows: auto 1fr auto; /* Define rows for cover, controls, and empty space */
+  max-width: 800px;
+  margin: auto;
+  border: 5px solid #fff;
+  
 }
 
-.lcd-overlay {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 20%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  z-index: 2;
-  background-size: 100% 2px, 4px 100%;
-  pointer-events: none;
-}
-
-.lcd-overlay::after {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(18, 16, 16, 0.1);
-  opacity: 0;
-  z-index: 2;
-  pointer-events: none;
-  animation: flicker 0.15s infinite;
-}
-
-@keyframes textShadow {
-  0% {
-    text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  5% {
-    text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  10% {
-    text-shadow: 0.02956275843481219px 0 1px rgba(0,30,255,0.5), -0.02956275843481219px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  15% {
-    text-shadow: 0.40218538552878136px 0 1px rgba(0,30,255,0.5), -0.40218538552878136px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  20% {
-    text-shadow: 3.4794037899852017px 0 1px rgba(0,30,255,0.5), -3.4794037899852017px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  25% {
-    text-shadow: 1.6125630401149584px 0 1px rgba(0,30,255,0.5), -1.6125630401149584px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  30% {
-    text-shadow: 0.7015590085143956px 0 1px rgba(0,30,255,0.5), -0.7015590085143956px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  35% {
-    text-shadow: 3.896914047650351px 0 1px rgba(0,30,255,0.5), -3.896914047650351px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  40% {
-    text-shadow: 3.870905614848819px 0 1px rgba(0,30,255,0.5), -3.870905614848819px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  45% {
-    text-shadow: 2.231056963361899px 0 1px rgba(0,30,255,0.5), -2.231056963361899px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  50% {
-    text-shadow: 0.08084290417898504px 0 1px rgba(0,30,255,0.5), -0.08084290417898504px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  55% {
-    text-shadow: 2.3758461067427543px 0 1px rgba(0,30,255,0.5), -2.3758461067427543px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  60% {
-    text-shadow: 2.202193051050636px 0 1px rgba(0,30,255,0.5), -2.202193051050636px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  65% {
-    text-shadow: 2.8638780614874975px 0 1px rgba(0,30,255,0.5), -2.8638780614874975px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  70% {
-    text-shadow: 0.48874025155497314px 0 1px rgba(0,30,255,0.5), -0.48874025155497314px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  75% {
-    text-shadow: 1.8948491305757957px 0 1px rgba(0,30,255,0.5), -1.8948491305757957px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  80% {
-    text-shadow: 0.0833037308038857px 0 1px rgba(0,30,255,0.5), -0.0833037308038857px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  85% {
-    text-shadow: 0.09769827255241735px 0 1px rgba(0,30,255,0.5), -0.09769827255241735px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  90% {
-    text-shadow: 3.443339761481782px 0 1px rgba(0,30,255,0.5), -3.443339761481782px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  95% {
-    text-shadow: 2.1841838852799786px 0 1px rgba(0,30,255,0.5), -2.1841838852799786px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-  100% {
-    text-shadow: 2.6208764473832513px 0 1px rgba(0,30,255,0.5), -2.6208764473832513px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-  }
-}
-
-@keyframes flicker {
-  0% {
-  opacity: 0.27861;
-  }
-  5% {
-  opacity: 0.34769;
-  }
-  10% {
-  opacity: 0.23604;
-  }
-  15% {
-  opacity: 0.90626;
-  }
-  20% {
-  opacity: 0.18128;
-  }
-  25% {
-  opacity: 0.83891;
-  }
-  30% {
-  opacity: 0.65583;
-  }
-  35% {
-  opacity: 0.67807;
-  }
-  40% {
-  opacity: 0.26559;
-  }
-  45% {
-  opacity: 0.84693;
-  }
-  50% {
-  opacity: 0.96019;
-  }
-  55% {
-  opacity: 0.08594;
-  }
-  60% {
-  opacity: 0.20313;
-  }
-  65% {
-  opacity: 0.71988;
-  }
-  70% {
-  opacity: 0.53455;
-  }
-  75% {
-  opacity: 0.37288;
-  }
-  80% {
-  opacity: 0.71428;
-  }
-  85% {
-  opacity: 0.70419;
-  }
-  90% {
-  opacity: 0.7003;
-  }
-  95% {
-  opacity: 0.36108;
-  }
-  100% {
-  opacity: 0.24387;
-  }
-}
-
-#cover-art::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: inherit;
-  z-index: -1;
-  filter: blur(2px); /* Apply a blur to simulate LCD glow */
-}
-
-.screen-glow {
-  position: absolute;
-  top: -10px; right: -10px; bottom: -10px; left: -10px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
-  filter:blur(2px)
-  z-index: 1; /* Behind the cover art */
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7); /* Glowing effect */
-  pointer-events: none; /* Allows clicks to pass through */
-}
-
-.screen-container {
-  margin: auto; /* Centers within the .pocket-radio container */
-  border: 5px solid #333; /* Simulate a bezel. Adjust color as needed */
-  border-radius: 10px; /* Match this to .pocket-radio's border-radius */
+#screen-container {
   position: relative;
   grid-column: 1;
   grid-row: 1;
@@ -502,8 +285,6 @@ button#volume-btn {
   align-items: center;
   padding: 10px;
   background-color: black;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7), /* Inner shadow for depth */
-              0 0 15px rgba(0, 0, 0, 0.5); /* Outer shadow for depth */
 }
 
 button {
@@ -533,15 +314,25 @@ footer {
     grid-template-rows: auto auto auto;
   }
 
+  #song-info {
+    min-width: 0; /* Allow the container to shrink */
+    max-width: calc(100% - 20px); /* Your existing max-width */ /* Smaller for mobile screens */
+  }
+
   button {
     padding: 5px 10px;
+  }
+
+  #cover-art-container {
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .volume-slider {
     width: 80px; /* Smaller slider on mobile */
   }
 
-  .player-controls {
+  #player-controls {
     grid-column: 1;
     grid-row: 2;
   }
