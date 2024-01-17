@@ -3,17 +3,29 @@ import json
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, error
 
-
+def sanitize_metadata(tag, default='Unknown'):
+    # If the tag is present, encode and decode its first text item
+    # If the tag is absent, use the default string
+    text = tag.text[0] if tag else default
+    return text.encode('ascii', 'replace').decode()
 
 def extract_metadata(file_path, cover_art_dir):
     audio = MP3(file_path, ID3=ID3)
 
+    # Use get to return None if the tag is not present
+    title_tag = audio.get('TIT2')
+    artist_tag = audio.get('TPE1')
+    album_tag = audio.get('TALB')
+
     metadata = {
-        'title': str(audio.get('TIT2', 'Unknown Title')),
-        'artist': str(audio.get('TPE1', 'Unknown Artist')),
-        'album': str(audio.get('TALB', 'Unknown Album')),
-        'cover_art': None
+        'title': sanitize_metadata(title_tag, 'Unknown Title'),
+        'artist': sanitize_metadata(artist_tag, 'Unknown Artist'),
+        'album': sanitize_metadata(album_tag, 'Unknown Album'),
+        'cover_art': None,
     }
+    # Add this check to see if there's an existing comment
+    if 'comment' not in metadata or not metadata['comment']:
+        metadata['comment'] = ""  # Placeholder for manual comment
 
     if audio.tags is not None:
         for tag in audio.tags.values():

@@ -18,7 +18,6 @@ body {
   align-items: center; /* Centers vertically */
   min-height: 100vh; /* At least full viewport height */
 }
-
 body::before, body::after {
   content: '';
   position: fixed;
@@ -92,9 +91,9 @@ input[type=range] {
   border: 1px solid white;
 }
 
-/*#play-btn:active, #pause-btn:active {
+#play-btn:active, #pause-btn:active {
   transform: scale(0.95); /* Slightly shrink buttons when clicked */
-}*/
+}
 
 input[type=range]:focus {
   outline: none; /* Remove the focus outline */
@@ -266,53 +265,7 @@ button#volume-btn {
   
 }
 
-.button-out {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow to appear raised */
-}
 
-.button-in {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.7) inset; /* Shadow to appear pressed in */
-}
-
-.svg-button {
-  /* Basic styling */
-  display: inline-block;
-  border-radius: 50%; /* Make the buttons round */
-  width: 75px; /* Adjust width as needed */
-  height: 75px; /* Adjust height as needed */
-  padding: 10px;
-  margin: 5px;
-  transition: all 0.2s ease-in-out;
-
-  /* Subtle gradient for a metallic look */
-  background: radial-gradient(circle at center, #1a1a1a  0%, #1a1a1a 40%, #000000 100%);
-  
-  /* Text and SVG color */
-  color: #fff; /* Ensure this applies to text inside the button */
-  fill: #fff; /* SVG fill color */
-
-  /* Subtle shadow for depth */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-
-  /* Hover effect */
-  &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  }
-
-  /* Active/Pressed effect */
-  &:active {
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.7) inset;
-  }
-}
-
-.svg-button.play {
-  box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.5), /* Outer shadow for 'raised' effect */
-    0 2px 4px rgba(0, 0, 0, 0.2) inset; /* Slight inset for dimension */
-}
-.svg-button.pause {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.7) inset; /* Inset shadow for 'pressed' effect */
-}
 
 /* Style for the volume and mute buttons */
 .volume-control-container {
@@ -355,87 +308,31 @@ button#volume-btn {
   transform: scale(1.02); /* Slightly enlarge buttons on hover */
 }
 
-/*#play-btn, #pause-btn, #heart-btn {
-  /* Remove or override any existing styles that conflict with the metallic look */
-  /* Apply the metallic button styling */
-  background: none; /* Clear any background styling */
-  border: none; /* Clear borders */
-  box-shadow: none; /* Clear box shadows */
-  /* Add the new class to these buttons */
-
-
-.metallic-button {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.15));
-  border: 1px solid #ccc;
-  box-shadow: 
-   
-0px 2px 2px rgba(0,0,0,0.2),
-inset 0px 1px 1px rgba(255,255,255,0.5),
-inset 0px -1px 1px rgba(0,0,0,0.5);
-padding: 10px;
-border-radius: 5px; /* Adjust for roundness */
-transition: all 0.2s ease-in-out;
+/* Play/Pause Button Styling */
+#play-btn, #pause-btn {
+  grid-column: 1;
+  justify-self: start; /* Align to the start of the column */
+  padding: 0px 95px; /* More horizontal padding for a wider button */
+  /* Rest of your button styling */
 }
 
-.metallic-button:hover {
-background: linear-gradient(145deg, rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.25));
-box-shadow:
-0px 2px 2px rgba(0,0,0,0.3),
-inset 0px 1px 1px rgba(255,255,255,0.6),
-inset 0px -1px 1px rgba(0,0,0,0.6);
-}
-
-.metallic-button:active {
-box-shadow:
-inset 0px 2px 2px rgba(0,0,0,0.3),
-inset 0px 1px 1px rgba(255,255,255,0.6);
+/* Heart Button Styling - placeholder for your heart button */
+#heart-btn {
+  grid-column: 2;
+  padding: 0px 100px;
+  /* Your heart button styling */
 }
 
 .pocket-radio {
- 
-  border-radius: 10px;
-  width: 900px;
+  background: #e1e1e1; /* Color of the radio */
+  border: 3px solid #000; /* Border to mimic plastic */
+  border-radius: 10px; /* Rounded corners */
+  width: 900px; /* Adjust size as needed */
   padding: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
   text-align: center;
-  position: relative;
-  margin-top: 0px;
-
-  /* Base color - a shade of space grey */
-  background: #1a1a1a; /* Dark grey, you can adjust this shade as needed */
-
-  /* Refined linear gradients for a subtle metallic effect */
-  background-image:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.06), transparent 50%, rgba(0, 0, 0, 0.06)),
-    linear-gradient(-145deg, rgba(255, 255, 255, 0.06), transparent 50%, rgba(0, 0, 0, 0.06));
-
-  /* Noise texture for added realism */
-  background-image: 
-    url('./assets/noisy-background.jpg'), /* Your noise texture */
-    #1a1a1a; /* Base color */
-  background-blend-mode: overlay;
-
-  /* Subtle box shadow for depth */
-  
 }
 
-.pocket-radio::before {
-  content: '';
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  right: 5px;
-  bottom: 5px;
-  z-index: -1;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  border-radius: 8px;
-  opacity: 0.5;
-}
-
-/* Adjusting the LCD screen effect for a more realistic look */
-.lcd-overlay {
-  background-size: 100% 2px, 4px 100%;
-  background-image: url('./assets/noisy-background.jpg'), linear-gradient(rgba(18, 16, 16, 0) 20%, rgba(0, 0, 0, 0.25) 50%);
-}
 .lcd-overlay {
   content: " ";
   display: block;
