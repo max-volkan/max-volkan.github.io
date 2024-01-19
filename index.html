@@ -31,16 +31,20 @@
     <main>
         <div class="pocket-radio">
             <!--<button id="test-animation-btn">Test Animation</button>-->
-            <div class="screen-container">  
+            <div class="screen-container"> 
+                
+                
                 <img id="cover-art" src="" alt="Cover Art">
                 <div id="song-info">
                     <span id="song-name"></span><span id="separator"> - </span><span id="artist-name"></span>
                     <div id="loading-indicator" style="display: none;">Loading...</div>
                 </div>
-                <div id="ai-comments"></div>
-                <canvas id="audio-visualizer" width="50" height="50"></canvas>
-                <div class="lcd-overlay"></div> <!-- New div for the overlay -->
-                <div class="screen-glow"></div> <!-- This creates the glowing border effect -->
+                <div class="right-section">
+                    <div id="talking-bunny"><img src="./assets/MAXP3.png" alt="MAXP3 Logo" class="logo"></div>
+                    <div id="ai-comments"></div>
+                    <canvas id="audio-visualizer" width="100px" height="100px"></canvas>
+                </div>
+                
             </div>
             <img src="./assets/MAXP3.png" alt="Placeholder Logo" id="pocket-radio-logo">
 

@@ -28,11 +28,25 @@
         "comment": "Buhduh is really pushing the limits of numerical song titles. What's next, an entire math paper?"
     },
     {
+        "title": "aj theory",
+        "artist": "maxp3",
+        "album": "Unknown Album",
+        "cover_art": "aj theory.jpg",
+        "comment": ""
+    },
+    {
         "title": "audio graffiti w/ cat mother",
         "artist": "quinn",
         "album": "Unknown Album",
         "cover_art": "audio graffiti w_ cat mother.jpg",
         "comment": "If 'audio graffiti' isn't featuring a feline DJ scratching records, I'll be disappointed."
+    },
+    {
+        "title": "basset hound, again",
+        "artist": "corpsewax",
+        "album": "Unknown Album",
+        "cover_art": "basset hound, again.jpg",
+        "comment": ""
     },
     {
         "title": "bb1scrabble",
@@ -47,6 +61,13 @@
         "album": "Unknown Album",
         "cover_art": "BeatPortfolio2 [c-lips].jpg",
         "comment": "Kaeru's portfolio must be hopping with tracks if this is just the 'c-lips'."
+    },
+    {
+        "title": "diseperse",
+        "artist": "inspectah_k",
+        "album": "Unknown Album",
+        "cover_art": "diseperse.jpg",
+        "comment": ""
     },
     {
         "title": "dust samurai - great day [doomrmx]",
@@ -81,22 +102,42 @@
         "artist": "IndescribableINDY",
         "album": "Unknown Album",
         "cover_art": "Getminez.jpg",
-        "comment": "IndescribableINDY's 'Getminez' – because sharing is overrated."
+        "comment": "IndescribableINDY's 'Getminez' \u2013 because sharing is overrated."
     },
     {
         "title": "hauntme",
         "artist": "slowly, slowly",
         "album": "Unknown Album",
         "cover_art": "hauntme.jpg",
-        "comment": "'Hauntme' by Slowly, Slowly – for those moments when you can't shake off that awkward thing you said 3 years ago."
-
+        "comment": "'Hauntme' by Slowly, Slowly \u2013 for those moments when you can't shake off that awkward thing you said 3 years ago."
     },
     {
         "title": "in the night",
         "artist": "lovue",
         "album": "Unknown Album",
         "cover_art": "in the night.jpg",
-        "comment": "Lovue's 'in the night'—for all those who thought twilight was just too bright."
+        "comment": "Lovue's 'in the night'\u2014for all those who thought twilight was just too bright."
+    },
+    {
+        "title": "judybaileyflip",
+        "artist": "vcbf101",
+        "album": "Unknown Album",
+        "cover_art": "judybaileyflip.jpg",
+        "comment": ""
+    },
+    {
+        "title": "kogda tebe huevo rmx",
+        "artist": "R0Rcon4 RAS00L ACBH",
+        "album": "Unknown Album",
+        "cover_art": "kogda tebe huevo rmx.jpg",
+        "comment": ""
+    },
+    {
+        "title": "maxp3 uses anri kit",
+        "artist": "maxp3",
+        "album": "Unknown Album",
+        "cover_art": "maxp3 uses anri kit.jpg",
+        "comment": ""
     },
     {
         "title": "metgaler throwaway",
@@ -124,7 +165,7 @@
         "artist": "maxp3",
         "album": "Unknown Album",
         "cover_art": "nathan b.jpg",
-        "comment": "Maxp3's 'nathan b'—the musical equivalent of 'Guess who?'"
+        "comment": "Maxp3's 'nathan b'\u2014the musical equivalent of 'Guess who?'"
     },
     {
         "title": "Neon Nights (soulbop throw away)",
@@ -132,6 +173,13 @@
         "album": "Unknown Album",
         "cover_art": "Neon Nights (soulbop throw away).jpg",
         "comment": "Ethanbar? throws away neon nights like they're going out of style. Wait, are they?"
+    },
+    {
+        "title": "neuralinked",
+        "artist": "neura",
+        "album": "Unknown Album",
+        "cover_art": "neuralinked.jpg",
+        "comment": ""
     },
     {
         "title": "outnabout",
@@ -155,6 +203,13 @@
         "comment": "Retha bringing muskets to a beat battle. Talk about heavy artillery!"
     },
     {
+        "title": "sameyt3fhg",
+        "artist": "anri",
+        "album": "Unknown Album",
+        "cover_art": "sameyt3fhg.jpg",
+        "comment": ""
+    },
+    {
         "title": "scrap(probably)2",
         "artist": "chikyujin",
         "album": "Unknown Album",
@@ -162,11 +217,25 @@
         "comment": "With a name like 'scrap(probably)2', chikyujin's recycling bin must be a treasure trove."
     },
     {
+        "title": "silent slasj",
+        "artist": "ahemcell",
+        "album": "Unknown Album",
+        "cover_art": "silent slasj.jpg",
+        "comment": ""
+    },
+    {
         "title": "slowly, but surely",
         "artist": "downstem",
         "album": "Unknown Album",
         "cover_art": "slowly, but surely.jpg",
         "comment": "Downstem's taking their sweet time with 'slowly, but surely'. Hopefully, the track ends before we're all retired."
+    },
+    {
+        "title": "stinky feets",
+        "artist": "pendrag1_",
+        "album": "Unknown Album",
+        "cover_art": "stinky feets.jpg",
+        "comment": ""
     },
     {
         "title": "Strawberry Drums",
@@ -187,13 +256,27 @@
         "artist": "meezow",
         "album": "Unknown Album",
         "cover_art": "THRUYASYSTEM!!!!!!.jpg",
-        "comment": "Meezow's caps lock is stuck on 'THRUYASYSTEM!!!!!!'—subtlety is clearly overrated."
+        "comment": "Meezow's caps lock is stuck on 'THRUYASYSTEM!!!!!!'\u2014subtlety is clearly overrated."
     },
     {
         "title": "untitled6",
         "artist": "Duro",
         "album": "Unknown Album",
         "cover_art": "untitled6.jpg",
-        "comment": "Duro's 'untitled6' – when titles are overrated, but the track isn't."
+        "comment": "Duro's 'untitled6' \u2013 when titles are overrated, but the track isn't."
+    },
+    {
+        "title": "WASTEMIX 1",
+        "artist": "wastemen",
+        "album": "Unknown Album",
+        "cover_art": "WASTEMIX 1.jpg",
+        "comment": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+    },
+    {
+        "title": "????????? ????? ????",
+        "artist": "jetson",
+        "album": "Unknown Album",
+        "cover_art": "\u3164\u3164\ud835\udc13\ud835\udc07\ud835\udc11\ud835\udc0e\ud835\udc16\ud835\udc04\ud835\udc03 \ud835\udc13\ud835\udc00\ud835\udc0f\ud835\udc04\ud835\udc12 \u3299\ufe0f\u3164\u3164.jpg",
+        "comment": ""
     }
 ]

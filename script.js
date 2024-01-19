@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const player = document.getElementById('audio-player');
     const playBtn = document.getElementById('play-btn');
@@ -6,7 +8,86 @@ document.addEventListener('DOMContentLoaded', function() {
     const songName = document.getElementById('song-name');
     const artistName = document.getElementById('artist-name');
     const testAnimationBtn = document.getElementById('test-animation-btn');
+    // Variables for audio and visualizer elements
+    const container = document.getElementById("container");
+    const canvas = document.getElementById("audio-visualizer");
+    const ctx = canvas.getContext("2d");
+    
+    let audioCtx;
+    let analyser;
+    
+    player.crossOrigin = "anonymous"; // Set CORS to anonymous for the audio element
 
+    // Set up canvas dimensions
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+
+
+    const waveformHeightFactor = 1; // Height factor for the waveforms
+    const verticalOffset = 1000; // Vertical offset in pixels
+
+function drawWaveform(analyser) {
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        analyser.getByteTimeDomainData(dataArray);
+        
+        // Calculate the middle position of the canvas
+        const middle = canvas.height / 2;
+
+        // Draw the first waveform at the middle position minus the offset
+        drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset);
+
+        // Draw the second waveform at the middle position plus the offset
+        drawSingleWaveform(dataArray, bufferLength, middle + verticalOffset);
+    }
+
+    animate();
+}
+
+function drawSingleWaveform(dataArray, bufferLength, verticalPosition) {
+    ctx.beginPath();
+    const sliceWidth = canvas.width / bufferLength;
+    let x = 0;
+
+    for (let i = 0; i < bufferLength; i++) {
+        const v = dataArray[i] / 128.0; // Value between 0 and 2
+        const y = v * canvas.height / waveformHeightFactor + verticalPosition;
+
+        if (i === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+
+        x += sliceWidth;
+    }
+
+    ctx.lineTo(canvas.width, verticalPosition);
+    ctx.strokeStyle = 'white'; // Set waveform color
+    ctx.stroke();
+}
+
+
+    // Function to initialize audio context and analyser
+    function initAudio() {
+        
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        analyser.smoothingTimeConstant = 0.6;
+        console.log('AudioContext state:', audioCtx.state);
+        
+        const audioSource = audioCtx.createMediaElementSource(player);
+        audioSource.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        
+        drawWaveform(analyser); // Call your drawVisualizer function here
+    }
 
     player.volume = 0.5; // Set a default volume level, e.g., 50%
     volumeControl.value = player.volume; // Update the slider to match
@@ -15,21 +96,19 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentSong = '';
     let currentArtist = '';
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all navigation links
-        var navLinks = document.querySelectorAll('nav ul li a');
     
-        // Get current URL
-        var currentUrl = window.location.href;
+    var navLinks = document.querySelectorAll('nav ul li a');
     
-        // Loop through links and highlight the current page
-        navLinks.forEach(function(link) {
-            if (link.href === currentUrl) {
-                link.classList.add('current-page');
-            }
-        });
+    // Get current URL
+    var currentUrl = window.location.href;
+    
+    // Loop through links and highlight the current page
+    navLinks.forEach(function(link) {
+        if (link.href === currentUrl) {
+            link.classList.add('current-page');
+        }
     });
-
+   
     function fetchMetadata() {
         fetch('https://stream.maxp3.xyz/status-json.xsl')
             .then(response => response.json())
@@ -90,12 +169,29 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     playBtn.addEventListener('click', () => {
+        console.log('Play button clicked');
+        if (!audioCtx) {
+            initAudio();
+        }else {
+            console.log('AudioContext state:', audioCtx.state);
+        }
+
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        
         // Set the src to the live stream URL to catch up to the live point
         player.src = "https://stream.maxp3.xyz/stream";
         player.load(); // Load the new source
         player.play();
         playBtn.style.display = 'none';
         pauseBtn.style.display = 'inline';
+
+        if (!analyser) {
+            console.error("Analyser is not initialized.");
+            return;
+        }
+
     });
 
     pauseBtn.addEventListener('click', () => {

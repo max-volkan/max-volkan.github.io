@@ -60,15 +60,43 @@ header {
   
 }
 
+.right-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%; /* Adjust if necessary to set the desired width */
+  max-width: 100%; /* Prevent it from exceeding the screen-container width */
+  overflow: hidden; /* Hide any overflow */
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+}
+
 #ai-comments {
+  align-self: center;
   white-space: normal; /* Allow wrapping */
   word-wrap: break-word; /* Break words to prevent overflow */
   overflow-wrap: break-word; /* Similar to word-wrap */
+  width: 100%;
   max-width: 100%; /* Set a maximum width */
   font-family: 'Courier New', Courier, monospace;
   border-right: .15em solid #fff; /* Cursor effect */
   padding-left: 20px;
+  padding-right: 20px;
   animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+#audio-visualizer {
+  display: flex;
+  align-self: flex-end;
+  justify-self: center;
+  order: 2;
+  width: 120%; /* Adjust as needed */
+  height: 150px; /* Set a fixed height */
+  margin-top: 20px; /* Add some space above the canvas */
+  
+  
 }
 
 /* Typewriter typing effect */
