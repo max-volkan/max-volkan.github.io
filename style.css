@@ -73,6 +73,20 @@ header {
   max-width: 100%;
 }
 
+#bunnyMouthClosed {
+  image-rendering: pixelated;
+  height:auto;
+  margin-top: 10px;
+  width: 75px;
+}
+
+#bunnyMouthOpen {
+  image-rendering: pixelated;
+  margin-top: 10px;
+  height:auto;
+  width: 75px;
+}
+
 #ai-comments {
   align-self: center;
   white-space: normal; /* Allow wrapping */
@@ -93,8 +107,8 @@ header {
   justify-self: center;
   order: 2;
   width: 120%; /* Adjust as needed */
-  height: 150px; /* Set a fixed height */
-  margin-top: 20px; /* Add some space above the canvas */
+  height: 175px; /* Set a fixed height */
+  margin-top: 0px; /* Add some space above the canvas */
   
   
 }

@@ -27,51 +27,51 @@ document.addEventListener('DOMContentLoaded', function() {
     const waveformHeightFactor = 1; // Height factor for the waveforms
     const verticalOffset = 1000; // Vertical offset in pixels
 
-    let isPlaying = false; // Flag to indicate if the player is playing
+function drawWaveform(analyser) {
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
 
-    function drawWaveform(analyser) {
-        const bufferLength = analyser.frequencyBinCount;
-        const dataArray = new Uint8Array(bufferLength);
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        analyser.getByteTimeDomainData(dataArray);
         
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-            if (!isPlaying) return; // Do not draw the waveform if not playing
-    
-            analyser.getByteTimeDomainData(dataArray);
-    
-            const middle = canvas.height / 2;
-            drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset);
-            drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset - 250);
-            drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset + 250);
-        }
-    
-        animate();
+        // Calculate the middle position of the canvas
+        const middle = canvas.height / 2;
+
+        // Draw the first waveform at the middle position minus the offset
+        drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset);
+
+        // Draw the second waveform at the middle position plus the offset
+        drawSingleWaveform(dataArray, bufferLength, middle + verticalOffset);
     }
 
-    function drawSingleWaveform(dataArray, bufferLength, verticalPosition) {
-        ctx.beginPath();
-        const sliceWidth = canvas.width * 1.0 / bufferLength;
-        let x = 0;
-    
-        for (let i = 0; i < bufferLength; i++) {
-            const v = dataArray[i] / 128.0; // Value between 0 and 2
-            const y = v * canvas.height / waveformHeightFactor + verticalPosition;
-    
-            if (i === 0) {
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
-    
-            x += sliceWidth;
-            if (x >= canvas.width) break; // Prevent drawing beyond the canvas width
+    animate();
+}
+
+function drawSingleWaveform(dataArray, bufferLength, verticalPosition) {
+    ctx.beginPath();
+    const sliceWidth = canvas.width / bufferLength;
+    let x = 0;
+
+    for (let i = 0; i < bufferLength; i++) {
+        const v = dataArray[i] / 128.0; // Value between 0 and 2
+        const y = v * canvas.height / waveformHeightFactor + verticalPosition;
+
+        if (i === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
         }
-    
-        ctx.strokeStyle = 'white'; // Set waveform color
-        ctx.stroke();
+
+        x += sliceWidth;
     }
+
+    ctx.lineTo(canvas.width, verticalPosition);
+    ctx.strokeStyle = 'white'; // Set waveform color
+    ctx.stroke();
+}
 
 
     // Function to initialize audio context and analyser
@@ -179,14 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (audioCtx.state === 'suspended') {
             audioCtx.resume();
         }
-        isPlaying = true;
-        ctx.globalAlpha = 0; // Start with full transparency
-        let alpha = 0;
-        const fadeIn = setInterval(() => {
-        alpha += 0.05; // Increment alpha value
-        if (alpha >= 1) clearInterval(fadeIn);
-        ctx.globalAlpha = alpha; // Apply the alpha value to the context
-    }, 100); // Adjust the interval to control fade-in speed
+        
         // Set the src to the live stream URL to catch up to the live point
         player.src = "https://stream.maxp3.xyz/stream";
         player.load(); // Load the new source
@@ -205,43 +198,21 @@ document.addEventListener('DOMContentLoaded', function() {
         player.pause();
         pauseBtn.style.display = 'none';
         playBtn.style.display = 'inline';
-        isPlaying = false;
     });
 
 
     function typeWriterComment(comment) {
         const container = document.getElementById('ai-comments');
-        const bunnyMouthOpen = document.getElementById('bunnyMouthOpen');
-        const bunnyMouthClosed = document.getElementById('bunnyMouthClosed');
         container.textContent = ''; // Clear previous comment
         let i = 0;
-        let isMouthOpen = false; // Track the state of the rabbit's mouth
-    
-        // Function to toggle rabbit's mouth
-        function toggleMouth() {
-            isMouthOpen = !isMouthOpen;
-            bunnyMouthOpen.style.display = isMouthOpen ? 'block' : 'none';
-            bunnyMouthClosed.style.display = isMouthOpen ? 'none' : 'block';
-        }
-    
         function typing() {
-            if (i < comment.length) {
-                container.textContent += comment.charAt(i);
-                i++;
-                setTimeout(typing, 50); // Adjust typing speed as needed
-            } else {
-                // Ensure mouth is closed when typing is finished
-                clearInterval(mouthInterval);
-                bunnyMouthOpen.style.display = 'none';
-                bunnyMouthClosed.style.display = 'block';
-            }
+          if (i < comment.length) {
+            container.textContent += comment.charAt(i);
+            i++;
+            setTimeout(typing, 50); // Adjust speed as needed
+          }
         }
-    
         typing();
-    
-        // Set an interval for rabbit's mouth movement
-        // Adjust the interval time (e.g., 100 milliseconds) to control the mouth movement speed
-        const mouthInterval = setInterval(toggleMouth, 200);
     }
 
     let lastVolume = 0.1; // Default volume when unmuting from 0
