@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
             analyser.getByteTimeDomainData(dataArray);
     
             const middle = canvas.height / 2;
-            drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset);
-            drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset - 250);
-            drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset + 250);
+            drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset + 100);
+            drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset - 150);
+            drawSingleWaveform(dataArray, bufferLength, middle - verticalOffset + 350);
         }
     
         animate();
