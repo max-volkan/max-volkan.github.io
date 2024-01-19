@@ -78,6 +78,8 @@ header {
   height:auto;
   margin-top: 10px;
   width: 75px;
+  opacity: 50%;
+  filter: drop-shadow(0 0 10px rgba(43, 219, 250, 0.3));
 }
 
 #bunnyMouthOpen {
@@ -85,6 +87,8 @@ header {
   margin-top: 10px;
   height:auto;
   width: 75px;
+  opacity: 50%;
+  filter: drop-shadow(0 0 10px rgba(43, 219, 250, 0.3));
 }
 
 #ai-comments {
