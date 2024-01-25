@@ -451,8 +451,10 @@ inset 0px 1px 1px rgba(255,255,255,0.6);
   background: #1a1a1a; /* Base color as a fallback */
   background-image:   
     linear-gradient(145deg, rgba(26, 26, 26, 0.09), transparent 50%, rgba(0, 0, 0, 0.06)),
-    linear-gradient(-145deg, rgba(26, 26, 26, 0.06), transparent 50%, rgba(0, 0, 0, 0.06));
-  background-blend-mode: overlay, normal, normal;
+    linear-gradient(-145deg, rgba(26, 26, 26, 0.06), transparent 50%, rgba(0, 0, 0, 0.06)),
+    url('./assets/squared_metal.png');
+  background-blend-mode: overlay, normal, overlay;
+  
 }
 
 .pocket-radio::before {
@@ -463,7 +465,7 @@ inset 0px 1px 1px rgba(255,255,255,0.6);
   right: 0px;
   bottom: 0px;
   z-index: -1;
-  background-image: url('./assets/squared_metal.png');
+  
   filter: brightness(90%); /* adjust the percentage as needed */
   border-radius: 8px;
   opacity: 1;
@@ -503,11 +505,11 @@ inset 0px 1px 1px rgba(255,255,255,0.6);
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(18, 16, 16, 0.08);
+  background: rgba(18, 16, 16, 0.12);
   opacity: 0;
   z-index: 2;
   pointer-events: none;
-  animation: flicker 0.15s infinite;
+  animation: flicker 0.18s infinite;
   image-rendering: pixelated;
 }
 
