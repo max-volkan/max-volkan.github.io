@@ -305,22 +305,9 @@ main {
   margin: 0 5px; /* Adjust spacing as needed */
 }
 
-button#volume-btn {
-  width: 54px;
-  height: 57px;
-  padding: 0;
-  border: none;
-  box-sizing: border-box; /* This ensures padding and border are included in total width/height */
-  
-}
 
-.button-out {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow to appear raised */
-}
 
-.button-in {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.7) inset; /* Shadow to appear pressed in */
-}
+
 
 .svg-button {
   /* Basic styling */
@@ -331,66 +318,78 @@ button#volume-btn {
   padding: 10px;
   margin: 5px;
   transition: all 0.2s ease-in-out;
-  opacity: 0.4;
-  /* Subtle gradient for a metallic look */
-  background: radial-gradient(circle at center, #1a1a1a  0%, #1a1a1a 40%, #000000 100%);
+  opacity: 0.8; /* Adjust for a more solid look */
+  
+  /* Using the same metal texture background as .pocket-radio */
+  background: #1a1a1a; /* Base color as a fallback */
+  background-image:   
+    linear-gradient(145deg, rgba(26, 26, 26, 0.09), transparent 70%, rgba(0, 0, 0, 0.06)),
+    linear-gradient(-145deg, rgba(26, 26, 26, 0.06), transparent 70%, rgba(0, 0, 0, 0.06)),
+    url('./assets/squared_metal.png');
+  background-blend-mode: overlay, normal, overlay;
   
   /* Text and SVG color */
   color: #fff; /* Ensure this applies to text inside the button */
   fill: #fff; /* SVG fill color */
 
-  /* Subtle shadow for depth */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  /* Realistic metal shadow and border */
+  box-shadow: 
+    0 2px 2px rgba(0, 0, 0, 0.2), /* Soft shadow for depth */
+    0 4px 4px rgba(0, 0, 0, 0.4), /* Deeper shadow for more depth */
+    inset 0 2px 4px rgba(255, 255, 255, 0.07); /* Inner highlight */
+  border: 1px solid rgba(255, 255, 255, 0.04); /* Soft white border for a shiny edge */
 
   /* Hover effect */
   &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    opacity: 1; /* Full opacity on hover */
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.5), /* Larger shadow for lifted effect */
+      inset 0 2px 4px rgba(255, 255, 255, 0.5); /* Maintaining the inner highlight */
     cursor: pointer;
   }
 
   /* Active/Pressed effect */
   &:active {
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.7) inset;
+    box-shadow: 
+      0 2px 3px rgba(0, 0, 0, 0.7) inset, /* Pressed-in effect */
+      inset 0 2px 4px rgba(255, 255, 255, 0.5); /* Maintaining the inner highlight */
   }
 }
 
-.svg-button.play {
-  box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.5), /* Outer shadow for 'raised' effect */
-    0 2px 4px rgba(0, 0, 0, 0.2) inset; /* Slight inset for dimension */
-}
-.svg-button.pause {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.7) inset; /* Inset shadow for 'pressed' effect */
-}
-
-/* Style for the volume and mute buttons */
-.volume-control-container {
-  grid-column: 3; /* Place it in the third column */
-  display: flex;
-  justify-self: end; /* Align to the end of the column */
-  align-items: center;
-}
-
-/* Volume Button Styling */
-button#volume-btn {
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Button shadow */
+.volume-container {
+  position: relative;
+  width: 75px; /* Set to the width of your buttons */
+  height: 75px; /* Set to the height of your buttons */
 }
 
 /* If you have different SVGs for volume (like mute/unmute), you can toggle their visibility */
 #volume-icon {
   display: block; /* Shown by default */
-  
+
 }
 
 #mute-icon {
   display: none; /* Hidden by default */
 }
 
+#play-btn, #pause-btn, #heart-btn, #volume-icon, #mute-icon { 
+  align-self: center;
+}
 
+#play-btn {
+  width: 120px;
+  height: auto;
+}
 
-#play-btn:hover, #pause-btn:hover, #heart-btn:hover {
+#pause-btn {
+  width: 120px;
+  height: auto;
+}
+#heart-btn {
+  width: 120px;
+  height: auto;
+}
+#play-btn:hover, #pause-btn:hover, #heart-btn:hover, #volume-icon, #mute-icon {
   transform: scale(1.02); /* Slightly enlarge buttons on hover */
 }
 
@@ -402,39 +401,10 @@ button#volume-btn {
   /*box-shadow: none;*/ /* Clear box shadows */
   /* Add the new class to these buttons */
 
-
-.metallic-button {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.15));
-  border: 1px solid #ccc;
-  box-shadow: 
-   
-0px 2px 2px rgba(0,0,0,0.2),
-inset 0px 1px 1px rgba(255,255,255,0.5),
-inset 0px -1px 1px rgba(0,0,0,0.5);
-padding: 10px;
-border-radius: 5px; /* Adjust for roundness */
-transition: all 0.2s ease-in-out;
-}
-
-.metallic-button:hover {
-background: linear-gradient(145deg, rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.25));
-box-shadow:
-0px 2px 2px rgba(0,0,0,0.3),
-inset 0px 1px 1px rgba(255,255,255,0.6),
-inset 0px -1px 1px rgba(0,0,0,0.6);
-}
-
-.metallic-button:active {
-box-shadow:
-inset 0px 2px 2px rgba(0,0,0,0.3),
-inset 0px 1px 1px rgba(255,255,255,0.6);
-}
-
-
 .pocket-radio {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
   border-radius: 10px;
   width: 1100px;
   padding: 10px;
@@ -471,11 +441,26 @@ inset 0px 1px 1px rgba(255,255,255,0.6);
   opacity: 1;
 }
 
+/* This will be a new container for both the logo and the player controls */
+.controls-container {
+  display: flex;
+  flex-direction: column; /* Stacks children vertically */
+  align-items: center; /* Centers children horizontally */
+  justify-content: center; /* Centers children vertically */
+  height: 100%; /* Match the height of pocket-radio for vertical centering */
+}
+
+.player-controls {
+  display: flex;
+  flex-direction: column; /* Stacks controls vertically */
+  align-items: center; /* Centers controls horizontally */
+  width: 100%; /* Adjust as needed */
+}
+
 #pocket-radio-logo {
-  width: 0px; /* Adjust as needed */
-  height: 0px;
-  margin-bottom: 0px; /* Space between logo and screen/buttons */
-  align-self: flex-start; /* Aligns the logo to the start (left) */
+  width: 250px; /* Adjust as needed */
+  height: auto;
+  margin-bottom: 20px; /* Space between logo and screen/buttons */
 }
 
 /* Adjusting the LCD screen effect for a more realistic look */
