@@ -215,6 +215,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const bunnyMouthClosed = document.getElementById('bunnyMouthClosed');
         container.textContent = ''; // Clear previous comment
         let i = 0;
+        let typingInterval;
+        let mouthInterval;
         let isMouthOpen = false; // Track the state of the rabbit's mouth
     
         // Function to toggle rabbit's mouth
@@ -224,25 +226,47 @@ document.addEventListener('DOMContentLoaded', function() {
             bunnyMouthClosed.style.display = isMouthOpen ? 'none' : 'block';
         }
     
+        // Function to handle typing effect
         function typing() {
             if (i < comment.length) {
                 container.textContent += comment.charAt(i);
                 i++;
-                setTimeout(typing, 50); // Adjust typing speed as needed
             } else {
-                // Ensure mouth is closed when typing is finished
+                clearInterval(typingInterval);
                 clearInterval(mouthInterval);
                 bunnyMouthOpen.style.display = 'none';
                 bunnyMouthClosed.style.display = 'block';
             }
         }
     
-        typing();
+        // Start the typing effect and mouth animation
+        typingInterval = setInterval(typing, 50); // Adjust typing speed as needed
+        mouthInterval = setInterval(toggleMouth, 200); // Adjust mouth speed as needed
     
-        // Set an interval for rabbit's mouth movement
-        // Adjust the interval time (e.g., 100 milliseconds) to control the mouth movement speed
-        const mouthInterval = setInterval(toggleMouth, 200);
+        // Handle visibility change
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                // Clear intervals to stop typing and mouth animation
+                clearInterval(typingInterval);
+                clearInterval(mouthInterval);
+            } else if (document.visibilityState === 'visible') {
+                // Resume typing and mouth animation
+                if (i < comment.length) {
+                    typingInterval = setInterval(typing, 50); // Adjust typing speed as needed
+                    mouthInterval = setInterval(toggleMouth, 200); // Adjust mouth speed as needed
+                }
+            }
+        });
     }
+
+
+    const hamburger = document.querySelector('.hamburger-menu');
+    const navUL = document.querySelector('header nav ul');
+
+    hamburger.addEventListener('click', function() {
+        this.classList.toggle('active');
+        navUL.classList.toggle('active'); // Toggle the 'active' class on the nav UL
+    });
 
     let lastVolume = 0.1; // Default volume when unmuting from 0
 

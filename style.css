@@ -41,13 +41,9 @@ body::after {
   background: rgba(0, 0, 0, 0.65); /* Adjust opacity as needed */
 }
 
-header, header * {
-  background: transparent !important;
-}
-
 /* Header and Navigation */
 header {
-  background: none !important; /* Ensuring no background color */
+  background: none; /* Ensuring no background color */
   color: #fff;
   padding: 10px; /* Adjust as needed for spacing from the top and right */
   text-align: right;
@@ -671,39 +667,123 @@ footer {
   text-align: center;
 }
 
-/* Responsive Design */
+     /* Additional non-media query styles for the hamburger menu */
+.hamburger-menu {
+  display: none; /* Hidden by default, will be shown in the media query */
+ /* Style your hamburger icon here */
+}
+
 @media (max-width: 768px) {
-  header nav ul {
-      flex-direction: column;
-      align-items: flex-end;
-      white-space: nowrap;
-  overflow: hidden;
+    /* Adjust the header background and add border */
+    header {
+      background:rgba(0, 0, 0, 1);
+      background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent black */
+      border-bottom: 1px solid white; /* White border line */
+      justify-content: space-between; /* Space between logo and hamburger menu */
+      padding: 10px 15px; /* Padding adjusted for mobile */
+    }
+  
+    /* Adjust the logo positioning */
+    .logo {
+      order: -1; /* Move to the beginning */
+      height: auto; /* Adjust logo size for mobile */
+      width: 80px; /* Set a fixed width for the logo */
+      margin: 0; /* Remove margin */
+    }
+  
+    /* Hamburger menu styles */
+    .hamburger-menu {
+      align-self: center;
+      order: 1;
+      display: block; /* Show hamburger menu */
+      cursor: pointer;
+      width: 40px;
+      height: auto;
+  
+      /* Add more styling for the hamburger icon here */
+    }
+  
+    /* Hide the list and show the hamburger menu */
+    header nav ul {
+      display: none; /* Hide the navigation links */
+      flex-direction: column; /* Stack the links vertically when menu is open */
+      background-color: rgba(0, 0, 0, 0.9); /* Menu background */
+      position: absolute; /* Position it on top of other content */
+      right: 0;
+      top: 100%; /* Position right below the header */
+      border: 1px solid white; /* Add border to the menu */
+      width: 100%; /* Full width of the header */
+      transition: transform 0.3s; /* Smooth transition for the menu */
+      transform: translateY(-100%); /* Hide the menu initially */
+    }
+  
+    .hamburger-menu.active + nav ul,
+    header nav ul.active { /* Update the selector according to your HTML structure */
+      transform: translateY(0); /* Show the menu */
+    }
+    
+    .hamburger-menu svg {
+      fill: #ffffff; /* Set SVG fill color to white */
+    }
+    .hamburger-menu path {
+      fill: #ffffff; /* Set SVG path fill color to white */
+    }
+    /* Show the navigation links when hamburger menu is clicked */
+    .hamburger-menu.active + nav ul {
+      display: flex; /* Show the navigation links */
+    }
+  
+    /* Adjust the player-controls to be side by side */
+    .player-controls {
+      flex-direction: row; /* Align controls side by side */
+      justify-content: space-around; /* Distribute space around controls */
+      padding: 10px; /* Add padding around controls */
+    }
+  
+    /* Adjust button sizes and spacing for mobile */
+    .svg-button {
+      width: 60px; /* Smaller buttons for mobile */
+      height: 60px;
+      margin: 5px;
+    }
+
+   
+  
+  .pocket-radio {
+    flex-direction: column; /* Stack elements vertically */
+    width: auto; /* Adjust width to fit mobile screens */
+    padding: 5px; /* Adjust padding as needed */
+    align-items: center; /* Center items horizontally */
+    max-width: 100%;
   }
 
-  #player-container {
-    grid-template-columns: 1fr; /* Stack elements under each other on smaller screens */
-    grid-template-rows: auto auto auto;
+  .screen-container {
+    height: 840px;
+    width: 700px;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically within the container */
+    max-width: 90%;
+    max-height: 50%;
   }
 
-  button {
-    padding: 5px 10px;
+  .logo {
+    height: auto; /* Adjust logo size for mobile */
+    width: 150px;
+    margin: 0; /* Remove margin */
   }
 
-  .volume-slider {
-    width: 80px; /* Smaller slider on mobile */
-  }
-
-  .player-controls {
+  /* Adjust other elements as needed for mobile */
+  #bunnyMouthClosed,
+  #bunnyMouthOpen,
+  #ai-comments,
+  .svg-button,
+  input[type=range] {
+    /* Adjust sizes and margins for mobile */
     display: flex;
     flex-direction: column;
-    align-self: flex-end;
   }
 
-  header nav ul li {
-      margin-top: 10px;
-      white-space: nowrap;
-      overflow: hidden;
-  }
+  /* Make any additional adjustments for other elements as needed */
 }
 
 /* Webkit Scrollbars for Chrome, Safari, and newer versions of Opera */
