@@ -20,6 +20,8 @@ body {
   overflow-y: auto;
 }
 
+
+
 body::before, body::after {
   content: '';
   position: fixed;
@@ -359,49 +361,11 @@ main {
   }
 }
 
-/* Volume Dial Container */
-#volume-dial-container {
-  position: relative; /* Positioning context for the dial */
-  width: 100px; /* Adjust as needed */
-  height: 100px; /* Adjust as needed */
-  margin: 10px auto; /* Center the dial */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.volume-container {
+  position: relative;
+  width: 75px; /* Set to the width of your buttons */
+  height: 75px; /* Set to the height of your buttons */
 }
-
-/* Volume Dial Styling */
-#volume-dial {
-  width: 100%; /* Full width of the container */
-  height: 100%; /* Full height of the container */
-  background-color: #1a1a1a; /* Dark base color */
-  border-radius: 50%; /* Circular shape */
-  box-shadow: 
-    inset 0 2px 4px rgba(255, 255, 255, 0.1), /* Inner light shadow */
-    0 4px 8px rgba(0, 0, 0, 0.5); /* Outer dark shadow */
-    background: #1a1a1a; /* Base color as a fallback */
-    background-image:   
-      linear-gradient(145deg, rgba(26, 26, 26, 0.09), transparent 70%, rgba(0, 0, 0, 0.06)),
-      linear-gradient(-145deg, rgba(26, 26, 26, 0.06), transparent 70%, rgba(0, 0, 0, 0.06)),
-      url('./assets/squared_metal.png');
-    background-blend-mode: overlay, normal, overlay;
-  cursor: pointer; /* Indicate interactiveness */
-}
-
-/* Knob Indicator */
-#volume-dial::before {
-  content: '';
-  position: absolute;
-  top: 10%; /* Position at the upper part of the dial */
-  left: 50%; /* Center horizontally */
-  width: 4px; /* Width of the indicator line */
-  height: 20%; /* Height of the indicator line */
-  background-color: #fff; /* White line color */
-  transform: translateX(-50%); /* Align correctly */
-  border-radius: 2px; /* Rounded edges */
-}
-
-
 
 /* If you have different SVGs for volume (like mute/unmute), you can toggle their visibility */
 #volume-icon {
