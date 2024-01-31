@@ -240,42 +240,52 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
 
-const volumeDial = document.getElementById('volume-dial');
+    const volumeDial = document.getElementById('volume-dial');
+    const volumeSlider = document.getElementById('volume-level-fill'); // Update to match the ID of your volume level fill
+    
     let isDragging = false;
-    let dialCenter;
     let startAngle;
-
+    let currentRotation = 0; // Current rotation of the dial
+    
+    function updateVolumeFromRotation(rotation) {
+        let newVolume = (rotation + 135) / 270;
+        player.volume = newVolume;
+        volumeSlider.style.width = (newVolume * 100) + '%';
+    }
+    
     function getAngle(event) {
-        const dx = event.clientX - dialCenter.x;
-        const dy = event.clientY - dialCenter.y;
+        const rect = volumeDial.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dx = event.clientX - centerX;
+        const dy = event.clientY - centerY;
         return Math.atan2(dy, dx) * (180 / Math.PI);
     }
-
+    
     volumeDial.addEventListener('pointerdown', function(event) {
-        const rect = volumeDial.getBoundingClientRect();
-        dialCenter = {
-            x: rect.left + rect.width / 2,
-            y: rect.top + rect.height / 2
-        };
-        startAngle = getAngle(event);
+        event.preventDefault();
+        startAngle = getAngle(event) - currentRotation;
         isDragging = true;
     });
-
+    
     document.addEventListener('pointermove', function(event) {
-        if (isDragging) {
-            const currentAngle = getAngle(event);
-            const angleDifference = currentAngle - startAngle;
-            const rotation = 'rotate(' + angleDifference + 'deg)';
-            volumeDial.style.transform = rotation;
-            // Update volume based on rotation
-            // You need to map the angleDifference to volume range here
+        if (!isDragging) return;
+        let angle = getAngle(event) - startAngle;
+    
+        // Clamp the rotation and update currentRotation
+        let clampedRotation = Math.max(-135, Math.min(135, angle));
+        if (clampedRotation !== angle) {
+            // Recalculate startAngle when clamping occurs to prevent jumps
+            startAngle = getAngle(event) - currentRotation;
         }
+        currentRotation = clampedRotation;
+        volumeDial.style.transform = 'rotate(' + currentRotation + 'deg)';
+        updateVolumeFromRotation(currentRotation);
     });
-
+    
     document.addEventListener('pointerup', function(event) {
         if (isDragging) {
             isDragging = false;
-            // Finalize the volume change
         }
     });
 
