@@ -361,6 +361,7 @@ main {
 
 /* Volume Dial Container */
 #volume-dial-container {
+  transform-origin: center;
   position: relative; /* Positioning context for the dial */
   width: 100px; /* Adjust as needed */
   height: 100px; /* Adjust as needed */
@@ -370,8 +371,18 @@ main {
   justify-content: center;
 }
 
+#no-stream-message {
+  font-size: xx-large;
+  width: 300%;
+  height: auto;
+  text-align: center;
+}
+
 /* Volume Dial Styling */
 #volume-dial {
+  transform: translateZ(0);
+  will-change: transform; /* Optimize for animations */
+  transition: transform 0.05s ease; /* Shorter duration for smoother movement */
   width: 100%; /* Full width of the container */
   height: 100%; /* Full height of the container */
   background-color: #1a1a1a; /* Dark base color */

@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const coverArtContainer = document.getElementById('cover-art'); // Adjust if necessary
     const aiCommentsContainer = document.getElementById('ai-comments'); // Adjust if necessary
     const songInfoContainer = document.getElementById('song-info'); // Adjust if necessary
+    const bunnyMouthClosed = document.getElementById('bunnyMouthClosed');
+    const bunnyMouthOpen = document.getElementById('bunnyMouthOpen');
 
     let audioCtx;
     let analyser;
@@ -86,11 +88,14 @@ document.addEventListener('DOMContentLoaded', function() {
             coverArtContainer.style.display = 'block';
             aiCommentsContainer.style.display = 'block';
             songInfoContainer.style.display = 'block';
+            bunnyMouthClosed.style.display = 'block';
+
         } else {
             noStreamMessage.style.display = 'block';
             coverArtContainer.style.display = 'none';
             aiCommentsContainer.style.display = 'none';
             songInfoContainer.style.display = 'none';
+            bunnyMouthClosed.style.display = 'none';
         }
     }
 
@@ -223,7 +228,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("Analyser is not initialized.");
             return;
         }
-        updateUIBasedOnStream(true); // Stream is playing
     });
 
     pauseBtn.addEventListener('click', () => {
@@ -231,7 +235,6 @@ document.addEventListener('DOMContentLoaded', function() {
         pauseBtn.style.display = 'none';
         playBtn.style.display = 'inline';
         isPlaying = false;
-        updateUIBasedOnStream(true); // Stream is playing
     });
 
     
@@ -275,6 +278,8 @@ const volumeDial = document.getElementById('volume-dial');
             // Finalize the volume change
         }
     });
+
+    
 
     function typeWriterComment(comment) {
         const container = document.getElementById('ai-comments');

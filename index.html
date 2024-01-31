@@ -9,6 +9,8 @@
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="https://unpkg.com/kursor/dist/kursor.css">
+
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
 
@@ -39,7 +41,7 @@
         <div class="pocket-radio">
             <!--<button id="test-animation-btn">Test Animation</button>-->
             <div class="screen-container"> 
-
+                <div id="no-stream-message" style="display: none;">No current stream</div>
                 <div class ="lcd-overlay"></div>
                 
                 <img id="cover-art" src="" alt="Cover Art">
@@ -98,5 +100,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
     <script src="script.js"></script>
     <script src="jogDial.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/kursor@0.0.14/dist/kursor.js"></script>
+    <script src="https://unpkg.com/kursor"></script>
+    <script>
+            new kursor({
+                    type: 3,
+                    color: '#ffffff',
+                    removeDefaultCursor: true
+            })
+    </script>
 </body>
 </html>
