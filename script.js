@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById("audio-visualizer");
     const ctx = canvas.getContext("2d");
     
+    const noStreamMessage = document.getElementById('no-stream-message');
+    const coverArtContainer = document.getElementById('cover-art'); // Adjust if necessary
+    const aiCommentsContainer = document.getElementById('ai-comments'); // Adjust if necessary
+    const songInfoContainer = document.getElementById('song-info'); // Adjust if necessary
+
     let audioCtx;
     let analyser;
     
@@ -22,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-
+    
 
     const waveformHeightFactor = 1; // Height factor for the waveforms
     const verticalOffset = 1000; // Vertical offset in pixels
@@ -73,6 +78,21 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.stroke();
     }
 
+
+    // Function to update the UI based on stream status
+    function updateUIBasedOnStream(isPlaying) {
+        if (isPlaying) {
+            noStreamMessage.style.display = 'none';
+            coverArtContainer.style.display = 'block';
+            aiCommentsContainer.style.display = 'block';
+            songInfoContainer.style.display = 'block';
+        } else {
+            noStreamMessage.style.display = 'block';
+            coverArtContainer.style.display = 'none';
+            aiCommentsContainer.style.display = 'none';
+            songInfoContainer.style.display = 'none';
+        }
+    }
 
     // Function to initialize audio context and analyser
     function initAudio() {
@@ -132,9 +152,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 updateCoverArt(metadata[0], metadata[1]);
+                updateUIBasedOnStream(true); // Assume stream is playing if metadata is fetched
+
             })
             .catch(error => {
                 console.error('Error fetching Icecast metadata:', error);
+                updateUIBasedOnStream(false); 
+
             });
     }
    
@@ -172,6 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Play button clicked');
         if (!audioCtx) {
             initAudio();
+            
         }else {
             console.log('AudioContext state:', audioCtx.state);
         }
@@ -198,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("Analyser is not initialized.");
             return;
         }
-
+        updateUIBasedOnStream(true); // Stream is playing
     });
 
     pauseBtn.addEventListener('click', () => {
@@ -206,63 +231,50 @@ document.addEventListener('DOMContentLoaded', function() {
         pauseBtn.style.display = 'none';
         playBtn.style.display = 'inline';
         isPlaying = false;
+        updateUIBasedOnStream(true); // Stream is playing
     });
 
-    document.getElementById('volume-dial').addEventListener('mousedown', function(event) {
-        event.preventDefault();
-    });
-
-    // Initialize JogDial for the volume control
-    var dial = JogDial(document.getElementById('volume-dial'), {
-        wheelSize: '100%',
-        knobSize: '30%',
-        minDegree: -135, // Min degree for volume
-        maxDegree: 135, // Max degree for volume
-        degreeStartAt: 0
-    });
-
-    // Function to convert degree to volume with buffer zone
-function degreeToVolume(degree) {
-    const buffer = 5; // Degrees of buffer on each end
-    degree = Math.max(-135 - buffer, Math.min(degree, 135 + buffer)); // Apply buffer
-    return Math.max(0, Math.min((degree + 135) / (270 + (buffer * 2)), 1)); // Adjust for buffer in calculation
-}
-
-
-// Function to update the slider visually
-function updateSlider(volume) {
-    document.getElementById('volume-level-fill').style.width = (volume * 100) + '%';
-}
-
-// Function to update the volume
-function updateVolume(volume) {
-    player.volume = volume;
-}
     
-// Event handler for mousemove
-dial.on('mousemove', function(event) {
-    var volume = degreeToVolume(event.target.rotation);
 
-    // Update the slider and volume immediately for real-time feedback
-    updateSlider(volume);
-    updateVolume(volume);
 
-    // Rotate the knob smoothly
-    var knob = document.getElementById('volume-dial');
-    knob.style.transition = 'transform 0.1s ease'; // Adjust as needed for smoother rotation
-    knob.style.transform = 'rotate(' + event.target.rotation + 'deg)';
-});
-// To ensure better mouse click handling, listen for mousedown and mouseup events
-document.getElementById('volume-dial').addEventListener('mousedown', function() {
-    this.classList.add('active'); // Add a class or handle active state
-});
+const volumeDial = document.getElementById('volume-dial');
+    let isDragging = false;
+    let dialCenter;
+    let startAngle;
 
-document.addEventListener('mouseup', function() {
-    var dialElement = document.getElementById('volume-dial');
-    if (dialElement.classList.contains('active')) {
-        dialElement.classList.remove('active'); // Remove the active state
+    function getAngle(event) {
+        const dx = event.clientX - dialCenter.x;
+        const dy = event.clientY - dialCenter.y;
+        return Math.atan2(dy, dx) * (180 / Math.PI);
     }
-});
+
+    volumeDial.addEventListener('pointerdown', function(event) {
+        const rect = volumeDial.getBoundingClientRect();
+        dialCenter = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2
+        };
+        startAngle = getAngle(event);
+        isDragging = true;
+    });
+
+    document.addEventListener('pointermove', function(event) {
+        if (isDragging) {
+            const currentAngle = getAngle(event);
+            const angleDifference = currentAngle - startAngle;
+            const rotation = 'rotate(' + angleDifference + 'deg)';
+            volumeDial.style.transform = rotation;
+            // Update volume based on rotation
+            // You need to map the angleDifference to volume range here
+        }
+    });
+
+    document.addEventListener('pointerup', function(event) {
+        if (isDragging) {
+            isDragging = false;
+            // Finalize the volume change
+        }
+    });
 
     function typeWriterComment(comment) {
         const container = document.getElementById('ai-comments');
