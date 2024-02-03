@@ -744,13 +744,28 @@ footer {
       background-color: rgba(0, 0, 0, 0.8);
       border-bottom: 1px solid white;
   }
-  
+  #no-stream-message {
+    font-size: xx-large;
+    position: absolute;
+    width: 300%;
+    height: auto;
+    text-align: center;
+  }
     /* Adjust the logo positioning */
     .logo {
+      
       display: block;
       height: auto; /* Adjust logo size for mobile */
       width: 150px; /* Set a fixed width for the logo */
       margin: 0; /* Remove margin */
+    }
+
+    #pocket-radio-logo {
+      margin-top: 20px;
+      width: 250px; /* Adjust as needed */
+      height: auto;
+      margin-bottom: 10px; /* Space between logo and screen/buttons */
+      pointer-events: none;
     }
 
     .desktop-logo {
@@ -842,6 +857,8 @@ footer {
     max-width: 90%;
     max-height: 50%;
   }
+
+  
 
   /* Adjust other elements as needed for mobile */
   #bunnyMouthClosed,
