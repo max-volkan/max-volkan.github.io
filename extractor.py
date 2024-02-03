@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, error
 
@@ -24,8 +25,9 @@ def extract_metadata(file_path, cover_art_dir):
         'cover_art': None,
     }
     # Add this check to see if there's an existing comment
-    if 'comment' not in metadata or not metadata['comment']:
-        metadata['comment'] = ""  # Placeholder for manual comment
+    if "comment" not in metadata or not metadata["comment"]:
+        print("comment not found for: ", metadata["title"])
+        metadata["comment"] = ""  # Placeholder for manual comment
 
     if audio.tags is not None:
         for tag in audio.tags.values():
@@ -40,7 +42,7 @@ def extract_metadata(file_path, cover_art_dir):
     return metadata
 
 def main():
-    directory = 'C:/Users/mtvol/Desktop/sunlit web/max-volkan.github.io/radio-song-crate-1'
+    directory = './radio-song-crate-1'
     all_metadata = []
     cover_art_dir = os.path.join(directory, 'cover_arts')
     if not os.path.exists(cover_art_dir):
